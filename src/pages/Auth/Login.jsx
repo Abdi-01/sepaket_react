@@ -62,8 +62,8 @@ class Login extends React.Component {
                                         <a class="text-decoration-none" href="#">Forgot Password?</a>
                                     </div>
                                     <div class="d-flex flex-column align-items-center">
-                                        <button  className="btn btn-primary mt-3 col-12">Sign In</button>
-                                        {/* onClick={() => this.props.loginUser(this.state)} */}
+                                        <button onClick={() => this.props.loginUser(this.state)} className="btn btn-primary mt-3 col-12">Sign In</button>
+                                        
 
                                         <button class="btn mt-3 col-12 border-secondary">
                                             <img class="me-2" src={Google} alt="" style={{height:"20px"}} />
