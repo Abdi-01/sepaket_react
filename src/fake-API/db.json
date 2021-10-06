@@ -1,0 +1,361 @@
+{
+  "user": [
+    {
+      "fullName": "Ahmad Ibrahim",
+      "username": "Ibrahim",
+      "email": "ibrahim@ninja.com",
+      "password": "test",
+      "role": "user",
+      "id": 1
+    },
+    {
+      "fullName": "Achmad Fauzi",
+      "username": "Fauzi",
+      "email": "FauziUI@gmail.com",
+      "password": "123",
+      "role": "user",
+      "id": 2,
+      "phoneNumber": "081350227029",
+      "age": "27",
+      "gender": "Male",
+      "address": "Cluster Alamanda"
+    },
+    {
+      "fullName": "achmad",
+      "username": "oji",
+      "email": "oji@mail.com",
+      "password": "1234",
+      "role": "user",
+      "id": 3
+    },
+    {
+      "fullName": "Siti Ulfah Pia",
+      "username": "pia",
+      "email": "pia@mail.com",
+      "password": "cantik",
+      "role": "user",
+      "id": 4
+    },
+    {
+      "fullName": "Fatimah Adiba Rosyidah",
+      "username": "adiba",
+      "email": "adiba@mail.com",
+      "password": "pintar",
+      "role": "user",
+      "id": 5
+    },
+    {
+      "fullName": "Super Admin",
+      "username": "admin",
+      "email": "admin@mail.com",
+      "password": "password",
+      "role": "admin",
+      "id": 6
+    },
+    {
+      "fullName": "Nina Yulia Isnaini",
+      "username": "yulia",
+      "email": "Yulia@gmail.com",
+      "password": "123",
+      "role": "user",
+      "id": 7
+    },
+    {
+      "fullName": "Buge Herodila",
+      "username": "buge",
+      "email": "buge@gmail.com",
+      "password": "abcd",
+      "role": "user",
+      "id": 8
+    },
+    {
+      "fullName": "baim",
+      "username": "baim",
+      "email": "baim@gmail.com",
+      "password": "678",
+      "role": "user",
+      "id": 9
+    }
+  ],
+  "transaction": [
+    {
+      "userId": 6,
+      "recipientName": "fauzi",
+      "totalPrice": 178500,
+      "totalPayment": 200000,
+      "transactionDate": "4-7-2021 ",
+      "transactionItem": [
+        {
+          "userId": 6,
+          "productId": 14,
+          "price": 75000,
+          "productName": "Topi Hitam Casual",
+          "productImage": "https://cdn1-production-images-kly.akamaized.net/hb6DqxqU_NBXJ_lYTmDYjuRmyVI=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/2754021/original/029823500_1552891993-foto_HL_topi.jpg",
+          "quantity": 1,
+          "id": 2
+        },
+        {
+          "userId": 6,
+          "productId": 1,
+          "price": 95000,
+          "productName": "Kaos React JS Navy",
+          "productImage": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2020/10/19/220e0ee1-f546-4899-a64c-dd2c92b0f0a8.jpg.webp",
+          "quantity": 1,
+          "id": 3
+        }
+      ],
+      "id": 1
+    },
+    {
+      "userId": 6,
+      "recipientName": "fauzi",
+      "totalPrice": 84000,
+      "totalPayment": 85000,
+      "transactionDate": "5-8-2021 ",
+      "transactionItem": [
+        {
+          "userId": 6,
+          "productId": 2,
+          "price": 80000,
+          "productName": "Kaos Bootstrap Navy",
+          "productImage": "https://cf.shopee.co.id/file/e102da4f3c12ec040629162b67ec98f5",
+          "quantity": 1,
+          "id": 1
+        }
+      ],
+      "id": 2
+    },
+    {
+      "userId": 6,
+      "recipientName": "fauzi",
+      "totalPrice": 231000,
+      "totalPayment": 300000,
+      "transactionDate": "25-8-2021 ",
+      "transactionItem": [
+        {
+          "userId": 6,
+          "productId": 4,
+          "price": 95000,
+          "productName": "kaos front end merah",
+          "productImage": "https://cf.shopee.co.id/file/1cceeb54d6fc0ef02e7510b92806ea84",
+          "quantity": 1,
+          "id": 1
+        },
+        {
+          "userId": 6,
+          "productId": 10,
+          "price": 125000,
+          "productName": "Celana Bahan Hitam Casual",
+          "productImage": "https://id-test-11.slatic.net/p/f35214d1f3dbefc0d0a9b15142ed0a95.jpg_720x720q80.jpg_.webp",
+          "quantity": 1,
+          "id": 2
+        }
+      ],
+      "id": 3
+    }
+  ],
+  "product": [
+    {
+      "id": 1,
+      "productName": "Kaos React JS Navy",
+      "price": 95000,
+      "productImage": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2020/10/19/220e0ee1-f546-4899-a64c-dd2c92b0f0a8.jpg.webp",
+      "description": "ini barang bagus loh",
+      "category": "kaos"
+    },
+    {
+      "id": 2,
+      "productName": "Kaos Bootstrap Navy",
+      "price": 80000,
+      "productImage": "https://cf.shopee.co.id/file/e102da4f3c12ec040629162b67ec98f5",
+      "description": "ini barang bagus bgt loh",
+      "category": "kaos"
+    },
+    {
+      "id": 3,
+      "productName": "Kaos html script hitam",
+      "price": 85000,
+      "productImage": "https://id-test-11.slatic.net/p/ede0814b2e302dd2268c3b5acb8fba5c.jpg_720x720q80.jpg_.webp",
+      "description": "cocok untuk pengguna html",
+      "category": "kaos"
+    },
+    {
+      "id": 4,
+      "productName": "kaos front end merah",
+      "price": 95000,
+      "productImage": "https://cf.shopee.co.id/file/1cceeb54d6fc0ef02e7510b92806ea84",
+      "description": "untuk kamu para front end",
+      "category": "kaos"
+    },
+    {
+      "id": 5,
+      "productName": "kaos CSS hitam",
+      "price": 90000,
+      "productImage": "https://cf.shopee.co.id/file/3ddc75007b06cf4efdc43f61284ee731",
+      "description": "developer CSS",
+      "category": "kaos"
+    },
+    {
+      "id": 6,
+      "productName": "kaos Web Developer Biru",
+      "price": 80000,
+      "productImage": "https://ciptaloka-mockups.s3.amazonaws.com/design/ap4nvgjzgq-29-0-1--m.jpg",
+      "description": "kaos para pembuat web",
+      "category": "kaos"
+    },
+    {
+      "id": 7,
+      "productName": "kaos JS Developer Hitam",
+      "price": 80000,
+      "productImage": "https://id-test-11.slatic.net/p/db8c9e68e51b89f2550c679f51ea4953.jpg",
+      "description": "kaos para pengguna JavaScript",
+      "category": "kaos"
+    },
+    {
+      "id": 8,
+      "productName": "kaos Designer vs Developer Putih",
+      "price": 100000,
+      "productImage": "https://ciptaloka-mockups.s3.amazonaws.com/design/bn48wy5547-18-0-1--l.jpg",
+      "description": "Kaos perbedaan Designer dan Developer untuk membuat kamu makin kece",
+      "category": "kaos"
+    },
+    {
+      "id": 9,
+      "productName": "Celana Bahan Hitam Formal",
+      "price": 130000,
+      "productImage": "https://cf.shopee.co.id/file/ada208b67a26194dcac203ae4b285c41",
+      "description": "Celana bahan hitam ini sangat cocok untuk acara acara formal",
+      "category": "celana"
+    },
+    {
+      "id": 10,
+      "productName": "Celana Bahan Hitam Casual",
+      "price": 125000,
+      "productImage": "https://id-test-11.slatic.net/p/f35214d1f3dbefc0d0a9b15142ed0a95.jpg_720x720q80.jpg_.webp",
+      "description": "Celana bahan hitam untuk berbagai acara",
+      "category": "celana"
+    },
+    {
+      "id": 11,
+      "productName": "Celana Bahan Abu-Abu Casual",
+      "price": 115000,
+      "productImage": "https://images.tokopedia.net/img/cache/700/product-1/2019/7/30/72120681/72120681_4e87c6f2-fc92-4e8e-8827-b8044967bd60_891_891",
+      "description": "Celana bahan abu-abu ini untuk berbagai acara",
+      "category": "celana"
+    },
+    {
+      "id": 12,
+      "productName": "Celana Bahan Abu-Abu Formal",
+      "price": 120000,
+      "productImage": "https://ik.imagekit.io/fzn/tr:n-auto85/image/cache/data/Baju-Pria/2019/december/celana-bahan-formal-panjang-slimfit-abu-terang-wb-700x700.jpg",
+      "description": "Celana bahan abu-abu ini cocok untuk acara resmi / formal",
+      "category": "celana"
+    },
+    {
+      "productName": "Celana Pendek Abri",
+      "price": 100000,
+      "productImage": "https://id-test-11.slatic.net/p/0091bb829a008ef9f8968b1293dc94dd.jpg_720x720q80.jpg_.webp",
+      "description": "Celana Abri ini bisa meningkatkan kegagahan Anda",
+      "category": "celana",
+      "id": 13
+    },
+    {
+      "productName": "Topi Hitam Casual",
+      "price": 75000,
+      "productImage": "https://cdn1-production-images-kly.akamaized.net/hb6DqxqU_NBXJ_lYTmDYjuRmyVI=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/2754021/original/029823500_1552891993-foto_HL_topi.jpg",
+      "description": "Topi Pria yang Bikin Tampilan Makin Fashionable",
+      "category": "aksesoris",
+      "id": 14
+    },
+    {
+      "productName": "Kaca Mata Hitam",
+      "price": 110000,
+      "productImage": "https://cf.shopee.co.id/file/0d308e9f1474fd267195da482fb13fca",
+      "description": "Kaca mata ini bisa membuat kita tambah keren",
+      "category": "aksesoris",
+      "id": 15
+    },
+    {
+      "productName": "tas ransel hitam",
+      "price": 150000,
+      "productImage": "https://images.tokopedia.net/img/cache/500-square/product-1/2019/11/16/81974973/81974973_c18dbc68-e6aa-4836-8005-854e834fb83c_1500_1500.webp",
+      "description": "tas ini bagus sekali",
+      "category": "aksesoris",
+      "id": 16
+    }
+  ],
+  "carts": [
+    {
+      "userId": 6,
+      "productId": 11,
+      "price": 115000,
+      "productName": "Celana Bahan Abu-Abu Casual",
+      "productImage": "https://images.tokopedia.net/img/cache/700/product-1/2019/7/30/72120681/72120681_4e87c6f2-fc92-4e8e-8827-b8044967bd60_891_891",
+      "quantity": 1,
+      "id": 3
+    },
+    {
+      "userId": 6,
+      "productId": 15,
+      "price": 110000,
+      "productName": "Kaca Mata Hitam",
+      "productImage": "https://cf.shopee.co.id/file/0d308e9f1474fd267195da482fb13fca",
+      "quantity": 1,
+      "id": 5
+    },
+    {
+      "userId": 2,
+      "productId": 2,
+      "price": 80000,
+      "productName": "Kaos Bootstrap Navy",
+      "productImage": "https://cf.shopee.co.id/file/e102da4f3c12ec040629162b67ec98f5",
+      "quantity": 2,
+      "id": 6
+    },
+    {
+      "userId": 2,
+      "productId": 5,
+      "price": 90000,
+      "productName": "kaos CSS hitam",
+      "productImage": "https://cf.shopee.co.id/file/3ddc75007b06cf4efdc43f61284ee731",
+      "quantity": 1,
+      "id": 12
+    },
+    {
+      "userId": 2,
+      "productId": 4,
+      "price": 95000,
+      "productName": "kaos front end merah",
+      "productImage": "https://cf.shopee.co.id/file/1cceeb54d6fc0ef02e7510b92806ea84",
+      "quantity": 1,
+      "id": 13
+    },
+    {
+      "userId": 2,
+      "productId": 6,
+      "price": 80000,
+      "productName": "kaos Web Developer Biru",
+      "productImage": "https://ciptaloka-mockups.s3.amazonaws.com/design/ap4nvgjzgq-29-0-1--m.jpg",
+      "quantity": 1,
+      "id": 14
+    },
+    {
+      "userId": 2,
+      "productId": 8,
+      "price": 100000,
+      "productName": "kaos Designer vs Developer Putih",
+      "productImage": "https://ciptaloka-mockups.s3.amazonaws.com/design/bn48wy5547-18-0-1--l.jpg",
+      "quantity": 1,
+      "id": 15
+    },
+    {
+      "userId": 2,
+      "productId": 9,
+      "price": 130000,
+      "productName": "Celana Bahan Hitam Formal",
+      "productImage": "https://cf.shopee.co.id/file/ada208b67a26194dcac203ae4b285c41",
+      "quantity": 1,
+      "id": 16
+    }
+  ]
+}

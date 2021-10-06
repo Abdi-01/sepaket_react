@@ -1,0 +1,25 @@
+
+nav a {
+    border: 2px solid transparent;
+}
+
+nav div div a:hover{
+    border-bottom: 2px solid red;
+    transition: .5s;
+}
+
+#btn-regis {
+    border: 2px solid red;
+    background-color: #FFc7c7;
+
+}
+
+#btn-regis:hover {
+    color: #92131a;
+    background-color: #FF9494;
+}
+
+#btn-login:hover {
+    color: red;
+}
+
