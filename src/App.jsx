@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.css"
 
 import Login from './pages/Auth/Login'
+import Register from './pages/Auth/Register'
 import Home from './pages/Home'
 import MyNavbar from './components/MyNavbar'
 
@@ -32,6 +33,7 @@ class App extends React.Component{
         <MyNavbar/>
         <Switch>
           <Route component={Login} path="/Login"/>
+          <Route component={Register} path="/Register"/>
           <Route component={Home} path="/"/>
         </Switch>
         </BrowserRouter>
