@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.css"
 
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
+import Profile from './pages/Profile'
 import Home from './pages/Home'
 import MyNavbar from './components/MyNavbar'
 
@@ -34,6 +35,7 @@ class App extends React.Component{
         <Switch>
           <Route component={Login} path="/Login"/>
           <Route component={Register} path="/Register"/>
+          <Route component={Profile} path="/Profile"/>
           <Route component={Home} path="/"/>
         </Switch>
         </BrowserRouter>
