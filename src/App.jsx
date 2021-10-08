@@ -5,7 +5,11 @@ import "bootstrap/dist/css/bootstrap.css"
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
 import Profile from './pages/Profile'
+import Admin from './pages/Admin'
+import Cart from './pages/Cart'
+import History from './pages/History'
 import Home from './pages/Home'
+import ProductDetail from './pages/ProductDetail'
 import MyNavbar from './components/MyNavbar'
 
 import { connect } from 'react-redux'
@@ -36,6 +40,10 @@ class App extends React.Component{
           <Route component={Login} path="/Login"/>
           <Route component={Register} path="/Register"/>
           <Route component={Profile} path="/Profile"/>
+          <Route component={Admin} path="/Admin"/>
+          <Route component={Cart} path="/Cart"/>
+          <Route component={History} path="/History"/>
+          <Route component={ProductDetail} path="/ProductDetail/:productId"/>
           <Route component={Home} path="/"/>
         </Switch>
         </BrowserRouter>

@@ -11,19 +11,20 @@ import Avatar from "../assets/images/avatar2.png"
 import Logo3 from "../assets/images/Logo4.png"
 import "../assets/navbarStyles.css"
 
- 
-class MyNavbar extends React.Component {
 
+
+class MyNavbar extends React.Component {
     render(){
         return (
             <div>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid mx-4">
-                <Link onClick={this.props.getCartData(this.props.userGlobal.id)} to="/"> <img src={Logo3} alt="" height="70"/></Link>
+                <Link  to="/"> <img src={Logo3} alt="" height="70"/></Link>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
+           
                         {
                                     this.props.userGlobal.username?
                                     <>
@@ -64,6 +65,12 @@ class MyNavbar extends React.Component {
                                     :
                                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                                            {/* <li class="nav-item">
+                                                <a class="nav-link me-2 active" aria-current="page" href="#">Custom Hampers</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link me-2" aria-current="page" href="#">Quick Hampers</a>
+                                            </li> */}
                                             <li class="nav-item dropdown me-2">
                                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> About Us </a>
                                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
