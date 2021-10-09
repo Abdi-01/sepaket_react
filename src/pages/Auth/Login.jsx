@@ -26,7 +26,7 @@ class Login extends React.Component {
 
     
     render(){
-        if (this.props.userGlobal.id){
+        if (this.props.userGlobal.id_user){
             return <Redirect to="/" />
         }
         return (

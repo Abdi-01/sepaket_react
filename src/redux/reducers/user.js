@@ -3,7 +3,7 @@ const init_state = {
     fullname:"",
     email:"",
     role:"",
-    id:0,
+    id_user:0,
     errMsg:"",
     storageIsChecked: false
 }

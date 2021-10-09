@@ -11,9 +11,9 @@ import Avatar from "../assets/images/avatar3.png"
 import Wave from "../assets/images/wave5.png"
 
 
-class Register extends React.Component {
+class profile extends React.Component {
     state = {
-        fullName: "",
+        fullname: "",
         username: "",
         email: "",
         password: "",
@@ -22,7 +22,7 @@ class Register extends React.Component {
         age : "",
         gender : "",
         address : "",
-        id:"",
+        id_user:"",
         oldPassword:"",
         newPassword:"",
         edit:""
@@ -32,17 +32,17 @@ class Register extends React.Component {
         this.fetchDataUser()
     }
 
-    fetchDataUser = (id=this.props.userGlobal.id) => {
-        Axios.get(`${API_URL}/user`,{
-            params: {id}
+    fetchDataUser = (username=this.props.userGlobal.username) => {
+        Axios.get(`${API_URL}/users/get`,{
+            params: {username}
         })
         .then((result)=>{
             this.setState({
-                fullName: result.data[0].fullName,
+                fullname: result.data[0].fullname,
                 username: result.data[0].username,
                 email: result.data[0].email,
                 password: result.data[0].password,
-                id: result.data[0].id,
+                id_user: result.data[0].id_user,
                 phoneNumber : result.data[0].phoneNumber,
                 age : result.data[0].age,
                 gender : result.data[0].gender,
@@ -65,8 +65,8 @@ class Register extends React.Component {
     }
 
     saveBTnHandler = () => {
-        Axios.patch(`${API_URL}/user/${this.state.id}`,{
-            fullName: this.state.fullName,
+        Axios.patch(`${API_URL}/users/edit-user/${this.state.id_user}`,{
+            fullname: this.state.fullname,
             username: this.state.username,
             email: this.state.email,
             phoneNumber : this.state.phoneNumber,
@@ -82,7 +82,7 @@ class Register extends React.Component {
 
     changePassword = () => {
         if(this.state.oldPassword===this.state.password){
-            Axios.patch(`${API_URL}/user/${this.state.id}`,{
+            Axios.patch(`${API_URL}/users/edit-user/${this.state.id_user}`,{
                 password: this.state.newPassword,
             })
             .then(()=>{
@@ -136,7 +136,7 @@ class Register extends React.Component {
                                         <div class="col">
                                             <form action="">
                                                 <h6 class="mt-3 text-start">Full Name</h6>
-                                                <input name="fullName" value={this.state.fullName} onChange={this.inputHandler} type="text" class="form-control"  required />
+                                                <input name="fullname" value={this.state.fullname} onChange={this.inputHandler} type="text" class="form-control"  required />
                                                 
                                                 <h6 class="mt-3 text-start">user name</h6>
                                                 <input name="username" value={this.state.username} onChange={this.inputHandler} type="text" class="form-control" />
@@ -217,7 +217,7 @@ class Register extends React.Component {
                                         <div class="col">
                                             <form action="">
                                                 <h6 class="mt-3 text-start">Full Name</h6>
-                                                <input name="fullName" value={this.state.fullName} onChange={this.inputHandler} type="text" class="form-control"  required disabled/>
+                                                <input name="fullname" value={this.state.fullname} onChange={this.inputHandler} type="text" class="form-control"  required disabled/>
                                                 
                                                 <h6 class="mt-3 text-start">user name</h6>
                                                 <input name="username" value={this.state.username} onChange={this.inputHandler} type="text" class="form-control" disabled />
@@ -325,4 +325,4 @@ const mapDispatchToProps = {
     registerUser
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(profile);
