@@ -1,20 +1,20 @@
 import Axios from 'axios'
 import { API_URL } from '../../constants/API'
 
-export const registerUser = ({ fullName, username, email, password }) => {
+export const registerUser = ({ username, fullname, email, password }) => {
     return (dispatch) => {
-        Axios.post(`${API_URL}/user`,{
-            fullName,
+        Axios.post(`${API_URL}/users/add-user`,{
             username,
+            fullname,
             email,
-            password,
-            role: "user"
+            password
         })
         .then((result)=>{
+            console.log(result.data[0])
             localStorage.setItem("userDataEmmerce",JSON.stringify(result.data))
             dispatch({
                 type: "USER_LOGIN",
-                payload: result.data
+                payload: result.data[0]
             })
             alert ('berhasil menambah user')
         })
@@ -24,7 +24,7 @@ export const registerUser = ({ fullName, username, email, password }) => {
 
 export const loginUser = ({ username, password }) => {
     return (dispatch)=>{
-        Axios.get(`${API_URL}/user`,{
+        Axios.get(`${API_URL}/users/get`,{
             params: {
                 username,
             }
@@ -41,6 +41,7 @@ export const loginUser = ({ username, password }) => {
                         type: "USER_LOGIN",
                         payload: result.data[0]
                         }) 
+                    
                 } else {
                     dispatch({
                         type: "USER_ERROR",
@@ -48,7 +49,7 @@ export const loginUser = ({ username, password }) => {
                     })
                 }
             } else {
-                Axios.get(`${API_URL}/user`,{
+                Axios.get(`${API_URL}/users/get`,{
                     params: {
                         email : username,
                     }
@@ -92,9 +93,9 @@ export const logoutUser = ()=>{
 
 export const userKeepLogin = (userData) => {
     return (dispatch) => {
-        Axios.get(`${API_URL}/user`,{
+        Axios.get(`${API_URL}/users/get`,{
             params: {
-                id : userData.id
+                id : userData.id_user
             }
         })
         .then ((result)=>{
