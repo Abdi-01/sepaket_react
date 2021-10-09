@@ -78,7 +78,11 @@ class MyNavbar extends React.Component {
               {this.props.userGlobal.username}{" "}
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem>Log Out</DropdownItem>
+              <DropdownItem>
+                <Link onClick={this.props.logoutUser} to="/">
+                  Log Out
+                </Link>
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
