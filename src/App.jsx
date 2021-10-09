@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import Home from "./pages/Home";
 import MyNavbar from "./components/MyNavbar";
 import Admin from "./pages/Admin";
+import ViewProductsAdmin from "./pages/ViewProductsAdmin";
 
 import { connect } from "react-redux";
 import { userKeepLogin, checkStorage } from "./redux/actions/user";
@@ -33,7 +34,9 @@ class App extends React.Component {
         <MyNavbar />
         <Switch>
           <Route component={Login} path="/login" />
+          <Route component={ViewProductsAdmin} path="/admin/viewproducts" />
           <Route component={Admin} path="/admin" />
+
           <Route component={Register} path="/register" />
           <Route component={Profile} path="/profile" />
           <Route component={Home} path="/" />
