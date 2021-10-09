@@ -1,7 +1,5 @@
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
-import Axios from 'axios'
-import { API_URL } from '../../constants/API'
 import { registerUser } from '../../redux/actions/user'
 import { connect } from 'react-redux'
 
@@ -15,7 +13,7 @@ import Google from "../../assets/images/google.png"
 
 class Register extends React.Component {
     state = {
-        fullName: "",
+        fullname: "",
         username: "",
         email: "",
         password: "",
@@ -27,21 +25,10 @@ inputHandler = (event) =>{
 
     this.setState({ [name]: value })
 }
-
-registerHandler = () => {
-    alert (`fullname: ${this.state.fullName}\nusername: ${this.state.username}\nemail: ${this.state.email}\npassword: ${this.state.password}`)
-    const { fullName, username, email, password } = this.state
-    Axios.post(`${API_URL}/user`,{
-        fullName,
-        username,
-        email,
-        password,
-        role: "user"
-    })
-}
     
     render(){
-        if (this.props.userGlobal.username){
+        console.log(this.props.userGlobal.id_user)
+        if (this.props.userGlobal.id_user){
             return <Redirect to="/" />
         }
         return (
@@ -65,7 +52,7 @@ registerHandler = () => {
                                 <div class="col">
                                     <form action="">
                                         <h6 class="mt-3 text-start">Full Name</h6>
-                                        <input name="fullName" onChange={this.inputHandler} type="text" class="form-control"  required autoFocus />
+                                        <input name="fullname" onChange={this.inputHandler} type="text" class="form-control"  required autoFocus />
                                         
                                         <h6 class="mt-3 text-start">user name</h6>
                                         <input name="username" onChange={this.inputHandler} type="text" class="form-control" />
