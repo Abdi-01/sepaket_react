@@ -8,18 +8,19 @@ class ProductDetail extends React.Component {
     state ={
         productData: {},
         productNotFound: false,
-        quantity: 1
+        quantity: 1,
+        harga:0
     }
 
     fetchProductData = () => {
-        Axios.get(`${API_URL}/product`,{
+        Axios.get(`${API_URL}/parcels/get`,{
             params:{
-                id: this.props.match.params.productId
+                id_parcel: this.props.match.params.productId
             }
         })
         .then((result)=>{
             if (result.data.length){
-                this.setState({ productData: result.data[0]})
+                this.setState({ productData: result.data[0], harga: result.data[0].harga_jual })
             } else {
                 this.setState({ productNotFound: true})
             }
@@ -74,6 +75,7 @@ class ProductDetail extends React.Component {
     }
 
     render(){
+        console.log(this.state.productData.harga_jual);
         return (
            <div className="container">
                {
@@ -84,13 +86,14 @@ class ProductDetail extends React.Component {
                    <div className="col-6">
                        <img
                        style ={{width:"100%"}}
-                       src={this.state.productData.productImage}
+                       src={this.state.productData.photo_parcel}
                        alt=""
                        />
                    </div>
                    <div className="col-6 d-flex flex-column justify-content-center">
-                       <h4>{this.state.productData.productName}</h4>
-                       <h5>Rp {this.state.productData.price}</h5>
+                       <h4>{this.state.productData.parcel_name}</h4>
+                       <h5>Rp {this.state.harga.toLocaleString()}</h5>
+                       
                        <p>          
                            {this.state.productData.description}
                        </p>
