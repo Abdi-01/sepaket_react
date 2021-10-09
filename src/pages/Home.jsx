@@ -11,13 +11,13 @@ class Home extends React.Component {
         page: 1,
         maxPage: 0,
         itemPerPage: 3,
-        searchProductName: "",
+        searchParcel_name: "",
         searchCategory: "",
         sortBy: "",
     }
  
     fetchProduct = () => {
-        Axios.get(`${API_URL}/product`)
+        Axios.get(`${API_URL}/parcels/get`)
         .then((result)=>{
             this.setState({ productList: result.data, maxPage: Math.ceil(result.data.length / this.state.itemPerPage), filteredProductList: result.data })
         })
@@ -28,10 +28,10 @@ class Home extends React.Component {
         let rawData =[...this.state.filteredProductList]
 
         const compareString = (a,b) => {
-            if (a.productName < b.productName){
+            if (a.parcel_name < b.parcel_name){
                 return -1;
             }
-            if (a.productName > b.productName){
+            if (a.parcel_name > b.parcel_name){
                 return 1;
             }
             return 0;
@@ -39,10 +39,10 @@ class Home extends React.Component {
 
         switch (this.state.sortBy){
             case "lowPrice":
-                rawData.sort((a,b)=> a.price - b.price);
+                rawData.sort((a,b)=> a.harga_jual - b.harga_jual);
                 break
             case "highPrice":
-                rawData.sort((a,b)=> b.price - a.price);
+                rawData.sort((a,b)=> b.harga_jual - a.harga_jual);
                 break
             case "az":
                 rawData.sort(compareString);
@@ -83,8 +83,11 @@ class Home extends React.Component {
     }
 
     searchBtnHandler = () => {
+        console.log(this.state.productList)
         const filteredProductList = this.state.productList.filter((val)=>{
-            return val.productName.toLowerCase().includes(this.state.searchProductName.toLowerCase()) && val.category.toLowerCase().includes(this.state.searchCategory.toLowerCase())})
+
+            return val.parcel_name.toLowerCase().includes(this.state.searchParcel_name.toLowerCase()) && val.category.toLowerCase().includes(this.state.searchCategory.toLowerCase())
+        })
 
         this.setState({ filteredProductList, maxPage : Math.ceil(filteredProductList.length / this.state.itemPerPage), page: 1})
     }
@@ -103,19 +106,18 @@ class Home extends React.Component {
                                 <strong>Filter Product</strong>
                             </div>
                             <div className="card-body">
-                                <label htmlFor="searchProductName">Product Name</label>
+                                <label htmlFor="searchParcel_name">Parcel Name</label>
                                 <input
                                     onChange={this.searchInputHandler}
-                                    name="searchProductName"
+                                    name="searchParcel_name"
                                     type="text"
                                     className="form-control mb-3"
                                 />
                         <label htmlFor="searchCategory">Product Category</label>
                         <select onChange={this.searchInputHandler} name="searchCategory" className="form-control">
                             <option value="">All Item</option>
-                            <option value="kaos">Kaos </option>
-                            <option value="celana">Celana</option>
-                            <option value="aksesoris">Aksesoris</option>
+                            <option value="quick parcel">Quick Parcel </option>
+                            <option value="customized parcel">Customized parcel</option>
                         </select>
                         <button onClick={this.searchBtnHandler} className="btn btn-primary mt-3">
                             Search
