@@ -3,7 +3,7 @@ import ProductCard from '../components/ProductCard'
 import Axios from 'axios'
 import { API_URL } from '../constants/API'
 import { connect } from 'react-redux'
-
+import { Redirect } from 'react-router-dom'
 class Home extends React.Component {
     state = {
         productList: [],
@@ -96,7 +96,11 @@ class Home extends React.Component {
         this.fetchProduct()
     }
 
+    
     render(){
+        if (this.props.userGlobal.status !== "verified"){
+            return <Redirect to="/Register" />
+        }
         return (
             <div className="container mt-5">
                 <div className="row">
