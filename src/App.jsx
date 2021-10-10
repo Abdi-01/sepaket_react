@@ -1,6 +1,7 @@
-import React from 'react'
-import { BrowserRouter, Route, Switch } from "react-router-dom"
-import "bootstrap/dist/css/bootstrap.css"
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.css";
+
 
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
@@ -12,31 +13,32 @@ import History from './pages/History'
 import Home from './pages/Home'
 import ProductDetail from './pages/ProductDetail'
 import MyNavbar from './components/MyNavbar'
+import ViewProductsAdmin from "./pages/ViewProductsAdmin";
 
-import { connect } from 'react-redux'
-import { userKeepLogin, checkStorage } from './redux/actions/user'
-import { getCartData } from './redux/actions/cart'
 
- 
-class App extends React.Component{
+import { connect } from "react-redux";
+import { userKeepLogin, checkStorage } from "./redux/actions/user";
+import { getCartData } from "./redux/actions/cart";
 
-  componentDidMount(){
-    const userLocalStorage = localStorage.getItem("userDataEmmerce")
+class App extends React.Component {
+  componentDidMount() {
+    const userLocalStorage = localStorage.getItem("userDataEmmerce");
 
     if (userLocalStorage) {
       const userData = JSON.parse(userLocalStorage);
       this.props.userKeepLogin(userData);
       this.props.getCartData(userData.username)
+      //this.props.getCartData(userData.id);
     } else {
-      this.props.checkStorage()
+      this.props.checkStorage();
     }
   }
 
-  render (){
-    if (this.props.userGlobal.storageIsChecked){
-      return (
-        <BrowserRouter>
-        <MyNavbar/>
+  render() {
+    // if (this.props.userGlobal.storageIsChecked) {
+    return (
+      <BrowserRouter>
+        <MyNavbar />
         <Switch>
           <Route component={Login} path="/Login"/>
           <Route component={Register} path="/Register"/>
@@ -47,29 +49,24 @@ class App extends React.Component{
           <Route component={History} path="/History"/>
           <Route component={ProductDetail} path="/ProductDetail/:productId"/>
           <Route component={Home} path="/"/>
+          <Route component={ViewProductsAdmin} path="/admin/viewproducts" />
         </Switch>
-        </BrowserRouter>
-      )
-    }
-
-    return(
-      <div>
-        Loading...
-      </div>
-    )
+      </BrowserRouter>
+    );
+    // }
   }
 }
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state) => {
   return {
-    userGlobal: state.user
-  }
-}
+    userGlobal: state.user,
+  };
+};
 
 const mapDispatchToProps = {
   userKeepLogin,
   checkStorage,
-  getCartData
-}
+  getCartData,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App);
