@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.css"
 
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
+import VerificationPage from './pages/Auth/verifiication'
 import Profile from './pages/Profile'
 import Admin from './pages/Admin'
 import Cart from './pages/Cart'
@@ -25,7 +26,7 @@ class App extends React.Component{
     if (userLocalStorage) {
       const userData = JSON.parse(userLocalStorage);
       this.props.userKeepLogin(userData);
-      this.props.getCartData(userData.id)
+      this.props.getCartData(userData.username)
     } else {
       this.props.checkStorage()
     }
@@ -39,6 +40,7 @@ class App extends React.Component{
         <Switch>
           <Route component={Login} path="/Login"/>
           <Route component={Register} path="/Register"/>
+          <Route component={VerificationPage} path="/auth/:token"/>
           <Route component={Profile} path="/Profile"/>
           <Route component={Admin} path="/Admin"/>
           <Route component={Cart} path="/Cart"/>
