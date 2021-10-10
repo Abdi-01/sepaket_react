@@ -5,7 +5,8 @@ const init_state = {
     role:"",
     id_user:0,
     errMsg:"",
-    storageIsChecked: false
+    storageIsChecked: false,
+    status:"",
 }
 const reducer = (state = init_state , action) =>{
     switch (action.type){

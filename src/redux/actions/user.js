@@ -11,7 +11,7 @@ export const registerUser = ({ username, fullname, email, password }) => {
         })
         .then((result)=>{
             console.log(result.data[0])
-            localStorage.setItem("userDataEmmerce",JSON.stringify(result.data))
+            localStorage.setItem("userDataEmmerce",JSON.stringify(result.data[0]))
             dispatch({
                 type: "USER_LOGIN",
                 payload: result.data[0]
@@ -30,12 +30,13 @@ export const loginUser = ({ username, password }) => {
             }
         })
         .then((result)=>{
-            console.log(result.data)
+            console.log(result.data[0])
             if(result.data.length){
                 if (password===result.data[0].password){
                     delete result.data[0].password
 
                     localStorage.setItem("userDataEmmerce",JSON.stringify(result.data[0]))
+                    console.log(localStorage)
 
                     dispatch({
                         type: "USER_LOGIN",
@@ -95,7 +96,7 @@ export const userKeepLogin = (userData) => {
     return (dispatch) => {
         Axios.get(`${API_URL}/users/get`,{
             params: {
-                id : userData.id_user
+                username : userData.username
             }
         })
         .then ((result)=>{
