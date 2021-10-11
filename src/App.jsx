@@ -11,12 +11,12 @@ import History from "./pages/History";
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import MyNavbar from "./components/MyNavbar";
-import ViewProductsAdmin from "./pages/ViewProductsAdmin";
 import ManageProductsAdmin from "./pages/ManageProductsAdmin";
 
 import { connect } from "react-redux";
 import { userKeepLogin, checkStorage } from "./redux/actions/user";
 import { getCartData } from "./redux/actions/cart";
+import RestockProductsAdmin from "./pages/RestockProductsAdmin";
 
 class App extends React.Component {
   componentDidMount() {
@@ -38,8 +38,11 @@ class App extends React.Component {
         <MyNavbar />
         <Switch>
           <Route component={Login} path="/login" />
-          <Route component={ViewProductsAdmin} path="/admin/viewproducts" />
           <Route component={ManageProductsAdmin} path="/admin/manageproducts" />
+          <Route
+            component={RestockProductsAdmin}
+            path="/admin/restockproducts"
+          />
           <Route component={Admin} path="/admin" />
           <Route component={Register} path="/register" />
           <Route component={Profile} path="/profile" />
