@@ -245,7 +245,7 @@ function ManageProductsAdmin() {
   useEffect(() => {
     fetchProduct();
     fetchCategory();
-  });
+  }, []);
 
   return (
     <div>
@@ -341,34 +341,6 @@ function ManageProductsAdmin() {
           </div>
         </div>
       </div>
-      {/* <div className="col-9">
-        <div className="d-flex flex-wrap flex-row">{renderProduct()}</div>
-      </div> */}
-      {/* <div className="container mt-5">
-        <div className="row">
-          <div className="col-3">
-            <div className="card mt-4">
-              <div className="card-header">
-                <strong>Sort Product</strong>
-              </div>
-              <div className="card-body">
-                <label htmlFor="sortBy">Sort By</label>
-                <select
-                  onChange={inputHandler}
-                  name="sortBy"
-                  className="form-control"
-                >
-                  <option value="">Default</option>
-                  <option value="lowPrice">Lowest Price</option>
-                  <option value="highPrice">Highest Price</option>
-                  <option value="az">A-Z</option>
-                  <option value="za">Z-A</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div> */}
-      {/* </div> */}
     </div>
   );
 }
