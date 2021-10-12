@@ -27,8 +27,7 @@ inputHandler = (event) =>{
 }
     
     render(){
-        console.log(this.props.userGlobal.id_user)
-        if (this.props.userGlobal.id_user){
+        if (this.props.userGlobal.status === "verified"){
             return <Redirect to="/" />
         }
         return (
