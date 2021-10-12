@@ -12,7 +12,6 @@ import History from './pages/History'
 import Home from './pages/Home'
 import ProductDetail from './pages/ProductDetail'
 import MyNavbar from './components/MyNavbar'
-import ViewProductsAdmin from "./pages/ViewProductsAdmin";
 import ManageProductsAdmin from "./pages/ManageProductsAdmin";
 
 
@@ -49,9 +48,8 @@ class App extends React.Component {
           <Route component={Cart} path="/Cart" />
           <Route component={History} path="/History" />
           <Route component={ProductDetail} path="/ProductDetail/:productId" />
-          <Route component={Home} path="/" />
-          <Route component={ViewProductsAdmin} path="/admin/viewproducts" />
           <Route component={ManageProductsAdmin} path="/admin/manageproducts" />
+          <Route component={Home} path="/" />
           <Route
             component={RestockProductsAdmin}
             path="/admin/restockproducts"
