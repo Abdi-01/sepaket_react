@@ -29,9 +29,11 @@ class MyNavbar extends React.Component {
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem>
-                <Link to="/admin/viewproducts">Products List</Link>
+                <Link to="/admin/manageproducts">Manage Products</Link>
               </DropdownItem>
-              <DropdownItem>Manage Product</DropdownItem>
+              <DropdownItem>
+                <Link to="/admin/restockproducts">Restock Products</Link>
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
           <UncontrolledDropdown nav inNavbar>

@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
-
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
 import VerificationPage from './pages/Auth/verifiication'
@@ -14,11 +13,13 @@ import Home from './pages/Home'
 import ProductDetail from './pages/ProductDetail'
 import MyNavbar from './components/MyNavbar'
 import ViewProductsAdmin from "./pages/ViewProductsAdmin";
+import ManageProductsAdmin from "./pages/ManageProductsAdmin";
 
 
 import { connect } from "react-redux";
 import { userKeepLogin, checkStorage } from "./redux/actions/user";
 import { getCartData } from "./redux/actions/cart";
+import RestockProductsAdmin from "./pages/RestockProductsAdmin";
 
 class App extends React.Component {
   componentDidMount() {
@@ -40,16 +41,21 @@ class App extends React.Component {
       <BrowserRouter>
         <MyNavbar />
         <Switch>
-          <Route component={Login} path="/Login"/>
-          <Route component={Register} path="/Register"/>
-          <Route component={VerificationPage} path="/auth/:token"/>
-          <Route component={Profile} path="/Profile"/>
-          <Route component={Admin} path="/Admin"/>
-          <Route component={Cart} path="/Cart"/>
-          <Route component={History} path="/History"/>
-          <Route component={ProductDetail} path="/ProductDetail/:productId"/>
-          <Route component={Home} path="/"/>
+          <Route component={Login} path="/Login" />
+          <Route component={Register} path="/Register" />
+          <Route component={VerificationPage} path="/auth/:token" />
+          <Route component={Profile} path="/Profile" />
+          <Route component={Admin} path="/Admin" />
+          <Route component={Cart} path="/Cart" />
+          <Route component={History} path="/History" />
+          <Route component={ProductDetail} path="/ProductDetail/:productId" />
+          <Route component={Home} path="/" />
           <Route component={ViewProductsAdmin} path="/admin/viewproducts" />
+          <Route component={ManageProductsAdmin} path="/admin/manageproducts" />
+          <Route
+            component={RestockProductsAdmin}
+            path="/admin/restockproducts"
+          />
         </Switch>
       </BrowserRouter>
     );
