@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import MyNavbar from "./components/MyNavbar";
 import ManageProductsAdmin from "./pages/ManageProductsAdmin";
+import AddParcel from "./pages/AddParcel";
 
 import { connect } from "react-redux";
 import { userKeepLogin, checkStorage } from "./redux/actions/user";
@@ -39,6 +40,7 @@ class App extends React.Component {
         <Switch>
           <Route component={Login} path="/login" />
           <Route component={ManageProductsAdmin} path="/admin/manageproducts" />
+          <Route component={AddParcel} path="/admin/addparcel" />
           <Route
             component={RestockProductsAdmin}
             path="/admin/restockproducts"

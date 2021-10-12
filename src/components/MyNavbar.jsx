@@ -41,8 +41,9 @@ class MyNavbar extends React.Component {
               Parcels
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem>Parcels List</DropdownItem>
-              <DropdownItem>Manage Parcel</DropdownItem>
+              <DropdownItem>
+                <Link to="/admin/addparcel">Add Parcel</Link>
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
           <UncontrolledDropdown nav inNavbar>

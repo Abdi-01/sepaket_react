@@ -330,7 +330,7 @@ function ManageProductsAdmin() {
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
-                  <th>Price</th>
+                  <th>Capital</th>
                   <th>Image</th>
                   <th>Category</th>
                   <th colSpan="2">Action</th>
