@@ -106,20 +106,22 @@ class MyNavbar extends React.Component {
               Quick Hampers
             </a>
           </li>
+
           <li className="nav-item dropdown me-2">
             <a
               class="nav-link dropdown-toggle"
               href="#"
-              id="navbarDropdown"
+              id="navbarScrollingDropdown"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              {" "}
               <img src={Avatar} alt="avatar" height="30" /> Hello,{" "}
               {this.props.userGlobal.username}{" "}
             </a>
           </li>
+        </ul>
+        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
           <li>
             <Link class="dropdown-item" to="/Profile">
               Edit Profile

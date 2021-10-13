@@ -16,7 +16,7 @@ function AddParcel() {
   const [toggleBtnOption, setToggleBtnOption] = useState(false);
 
   const fetchParcel = () => {
-    Axios.get(`${API_URL}/parcels/get`)
+    Axios.get(`${API_URL}/parcels-admin/get`)
       .then((result) => {
         setParcelList(result.data);
       })
