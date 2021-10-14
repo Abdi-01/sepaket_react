@@ -59,7 +59,8 @@ class Login extends React.Component {
                                             <input class="form-check-input me-1" type="checkbox" id="flexCheckDefault" />
                                             <label class="form-check-label" for="flexCheckDefault"> remember me </label>
                                         </div>
-                                        <a class="text-decoration-none" href="#">Forgot Password?</a>
+                                        <Link class="text-decoration-none" to ="/forgot-password"> Forgot Password?</Link>
+                                        
                                     </div>
                                     <div class="d-flex flex-column align-items-center">
                                         <button onClick={() => this.props.loginUser(this.state)} className="btn btn-primary mt-3 col-12">Sign In</button>
