@@ -9,15 +9,16 @@ export const registerUser = ({ username, fullname, email, password }) => {
             email,
             password
         })
-        .then((result)=>{
-            console.log(result.data[0])
-            localStorage.setItem("userDataEmmerce",JSON.stringify(result.data[0]))
-            dispatch({
-                type: "USER_LOGIN",
-                payload: result.data[0]
-            })
-            alert (`Please check email and let's verification your Sepaket account`)
-        })
+        alert (`Please check email and let's verification your Sepaket account`)
+        // .then((result)=>{
+        //     console.log(result.data[0])
+        //     localStorage.setItem("userDataEmmerce",JSON.stringify(result.data[0]))
+        //     dispatch({
+        //         type: "USER_LOGIN",
+        //         payload: result.data[0]
+        //     })
+        //     alert (`Please check email and let's verification your Sepaket account`)
+        // })
     }
     
 }
@@ -29,8 +30,8 @@ export const loginUser = ({ username, password }) => {
             password
         })
         .then((result)=>{
-            if(!result.data.dataLogin) alert (`Please check email and let's verification your Sepaket account`)
-            console.log(result.data.dataLogin)
+            if(!result.data.dataLogin) alert (result.data.message)
+            console.log(result.data)
             localStorage.setItem("userDataEmmerce",JSON.stringify(result.data.dataLogin))
             dispatch({
                 type: "USER_LOGIN",
