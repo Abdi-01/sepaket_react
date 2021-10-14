@@ -41,7 +41,6 @@ class profile extends React.Component {
                 fullname: result.data[0].fullname,
                 username: result.data[0].username,
                 email: result.data[0].email,
-                password: result.data[0].password,
                 id_user: result.data[0].id_user,
                 phoneNumber : result.data[0].phoneNumber,
                 age : result.data[0].age,
@@ -81,15 +80,13 @@ class profile extends React.Component {
     }
 
     changePassword = () => {
-        if(this.state.oldPassword===this.state.password){
-            Axios.patch(`${API_URL}/users/edit-user/${this.state.id_user}`,{
-                password: this.state.newPassword,
+            Axios.patch(`${API_URL}/users/change-password/${this.state.id_user}`,{
+                oldPassword: this.state.oldPassword,
+                newPassword: this.state.newPassword
             })
-            .then(()=>{
-                this.fetchDataUser()
-                alert("Password Updated")
+            .then((res)=>{
+                alert(res.data.message)
             })
-        } else {alert("Wrong password")}
     }
 
     fileSelectedHandler = event =>{
@@ -108,8 +105,8 @@ class profile extends React.Component {
     }
     
     render(){
-        if (!this.props.userGlobal.username){
-            return <Redirect to="/" />
+        if (this.props.userGlobal.status !== "verified"){
+            return <Redirect to="/Login" />
         }
         return (
             <div class="text-center mb-4">

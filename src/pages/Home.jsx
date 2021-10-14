@@ -99,7 +99,7 @@ class Home extends React.Component {
     
     render(){
         if (this.props.userGlobal.status !== "verified"){
-            return <Redirect to="/Register" />
+            return <Redirect to="/Login" />
         }
         return (
             <div className="container mt-5">
