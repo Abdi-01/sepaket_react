@@ -7,7 +7,7 @@ import { API_URL } from '../../constants/API'
 
 import "bootstrap/dist/css/bootstrap.css"
 import "bootstrap/dist/js/bootstrap.bundle"
-import "../../assets/floating-labels.css"
+import "../../assets/styles/floating-labels.css"
 import Forgot from "../../assets/images/forgot.png"
 
 class Login extends React.Component {

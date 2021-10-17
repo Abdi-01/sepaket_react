@@ -8,7 +8,7 @@ import "bootstrap/dist/js/bootstrap.bundle"
 import Avatar from "../../assets/images/avatar.png"
 import Wave from "../../assets/images/wave5.png"
 import Login2 from "../../assets/images/login2.png"
-import "../../assets/loginStyles.css"
+import "../../assets/styles/loginStyles.css"
 import Google from "../../assets/images/google.png"
 
 class Login extends React.Component {
@@ -27,7 +27,7 @@ class Login extends React.Component {
     
     render(){
         if (this.props.userGlobal.id_user){
-            return <Redirect to="/" />
+            return <Redirect to="/home" />
         }
         return (
             <div class="container">
