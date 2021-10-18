@@ -16,7 +16,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.bundle";
 import Avatar from "../assets/images/avatar2.png";
 import Logo3 from "../assets/images/Logo4.png";
-import "../assets/navbarStyles.css";
+import "../assets/styles/navbarStyles.css";
 
 class MyNavbar extends React.Component {
   renderNavAdmin = () => {
@@ -97,14 +97,7 @@ class MyNavbar extends React.Component {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <a className="nav-link me-2 active" aria-current="page" href="#">
-              Custom Hampers
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link me-2" aria-current="page" href="#">
-              Quick Hampers
-            </a>
+          <Link to="/home"><button class="btn" type="btn" id="btn-regis">Choose Parcel</button></Link>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -168,12 +161,12 @@ class MyNavbar extends React.Component {
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#about">
                   About Us
                 </a>
               </li>
               <li>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#contact">
                   Contact Us
                 </a>
               </li>
@@ -181,7 +174,7 @@ class MyNavbar extends React.Component {
                 <hr class="dropdown-divider" />
               </li>
               <li>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#faq">
                   FAQ
                 </a>
               </li>

@@ -14,11 +14,13 @@ import ProductDetail from "./pages/ProductDetail";
 import MyNavbar from "./components/MyNavbar";
 import ManageProductsAdmin from "./pages/ManageProductsAdmin";
 import AddParcel from "./pages/AddParcel";
+import FrontPage from "./pages/frontPage";
 
 import { connect } from "react-redux";
 import { userKeepLogin, checkStorage } from "./redux/actions/user";
 import { getCartData } from "./redux/actions/cart";
 import RestockProductsAdmin from "./pages/RestockProductsAdmin";
+import forgotPassword from "./pages/Auth/forgotPassword";
 
 class App extends React.Component {
   componentDidMount() {
@@ -41,11 +43,13 @@ class App extends React.Component {
         <MyNavbar />
         <Switch>
           <Route component={Login} path="/Login" />
+          <Route component={forgotPassword} path="/forgot-password" />
           <Route component={Register} path="/Register" />
           <Route component={VerificationPage} path="/auth/:token" />
           <Route component={Profile} path="/Profile" />
           <Route component={ManageProductsAdmin} path="/admin/manageproducts" />
           <Route component={AddParcel} path="/admin/addparcel" />
+
           <Route
             component={RestockProductsAdmin}
             path="/admin/restockproducts"
@@ -54,7 +58,8 @@ class App extends React.Component {
           <Route component={Cart} path="/Cart" />
           <Route component={History} path="/History" />
           <Route component={ProductDetail} path="/ProductDetail/:productId" />
-          <Route component={Home} path="/" />
+          <Route component={Home} path="/home" />
+          <Route component={FrontPage} path="/" />
           {/* <Route component={ViewProductsAdmin} path="/admin/viewproducts" /> */}
         </Switch>
       </BrowserRouter>

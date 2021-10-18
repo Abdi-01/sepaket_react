@@ -25,7 +25,8 @@ class profile extends React.Component {
         id_user:"",
         oldPassword:"",
         newPassword:"",
-        edit:""
+        edit:"",
+        photo_user:""
     }
 
     componentDidMount() {
@@ -41,7 +42,6 @@ class profile extends React.Component {
                 fullname: result.data[0].fullname,
                 username: result.data[0].username,
                 email: result.data[0].email,
-                password: result.data[0].password,
                 id_user: result.data[0].id_user,
                 phoneNumber : result.data[0].phoneNumber,
                 age : result.data[0].age,
@@ -49,6 +49,7 @@ class profile extends React.Component {
                 address : result.data[0].address,
                 oldPassword:"",
                 newPassword:"",
+                photo_user: result.data[0].photo_user
             })
         })       
     }
@@ -81,35 +82,38 @@ class profile extends React.Component {
     }
 
     changePassword = () => {
-        if(this.state.oldPassword===this.state.password){
-            Axios.patch(`${API_URL}/users/edit-user/${this.state.id_user}`,{
-                password: this.state.newPassword,
+            Axios.patch(`${API_URL}/users/change-password/${this.state.id_user}`,{
+                oldPassword: this.state.oldPassword,
+                newPassword: this.state.newPassword
             })
-            .then(()=>{
-                this.fetchDataUser()
-                alert("Password Updated")
+            .then((res)=>{
+                alert(res.data.message)
             })
-        } else {alert("Wrong password")}
     }
 
     fileSelectedHandler = event =>{
-        this.setState({
-            selectedFile: event.target.files[0]
-        })
+        if (event.target.files[0]){
+            this.setState({selectedFile: event.target.files[0]})
+            let preview = document.getElementById("imgPreview")
+            preview.src = URL.createObjectURL(event.target.files[0])
+        }
     }
 
     fileUploadHandler = () =>{
-        const fd = new FormData();
-        fd.append('image',this.state.selectedFile, this.state.selectedFile.name)
-        Axios.post(`${API_URL}/user`,{fd})
+        if(this.state.selectedFile){}
+        const formData = new FormData();
+        formData.append('file',this.state.selectedFile)
+        Axios.patch(`${API_URL}/users/photo-profile/${this.state.id_user}`, formData)
+
             .then(res=> {
-                console.log(res)
+                this.fetchDataUser()
+                alert(res.data.message)
             })
     }
     
     render(){
-        if (!this.props.userGlobal.username){
-            return <Redirect to="/" />
+        if (this.props.userGlobal.status !== "verified"){
+            return <Redirect to="/Login" />
         }
         return (
             <div class="text-center mb-4">
@@ -121,7 +125,11 @@ class profile extends React.Component {
 
                     <div class="col mb-5">
                             
-                            <img src={Avatar} alt="avatar" height="90"/>
+                        {   this.state.photo_user?
+                            <img id="imgPreview" class="rounded-circle" src={API_URL+this.state.photo_user} alt="avatar" height="90"/>
+                            :
+                            <img id="imgPreview" class="rounded-circle" src={Avatar} alt="avatar" height="90"/>
+                        }
 
                             <div class="d-flex justify-content-center mx-4">
                                 <input type="file" onChange={this.fileSelectedHandler} />
