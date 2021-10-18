@@ -8,7 +8,7 @@ import "bootstrap/dist/js/bootstrap.bundle"
 import Avatar from "../../assets/images/avatar3.png"
 import Wave from "../../assets/images/wave5.png"
 import Login from "../../assets/images/signUp3.png"
-import "../../assets/signUpStyles.css"
+import "../../assets/styles/signUpStyles.css"
 import Google from "../../assets/images/google.png"
 
 class Register extends React.Component {
