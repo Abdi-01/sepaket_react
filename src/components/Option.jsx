@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 
-function Option() {
+function Option({ category, categoryRender, categoryList, setCategoryRender }) {
+  const deleteCatHandler = () => {
+    // console.log(category);
+    setCategoryRender(categoryRender.filter((val) => val !== category));
+  };
   return (
     <div>
       <div class="input-group mb-3">
@@ -10,10 +14,11 @@ function Option() {
           class="form-select"
           aria-label="Default select example"
         >
-          {/* {CategoryList.map((val) => (
+          {/* <option value={category}>{category}</option> */}
+          {categoryList.map((val) => (
             <option value={val.id_cat}>{val.category_name}</option>
           ))}
-        </select>
+          {/*</select>
         {() => renderCategoryOption()} */}
         </select>
         <input
@@ -25,13 +30,13 @@ function Option() {
           aria-describedby="button-addon2"
         />
         <button
-          // onClick={() => addOption()}
-          class="btn btn-success"
+          onClick={deleteCatHandler}
+          class="btn btn-danger"
           type="button"
           id="button-addon2"
           // disabled={toggleBtnOption}
         >
-          Add
+          Delete
         </button>
       </div>
     </div>

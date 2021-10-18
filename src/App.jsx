@@ -12,7 +12,6 @@ import History from "./pages/History";
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import MyNavbar from "./components/MyNavbar";
-// import ViewProductsAdmin from "./pages/ViewProductsAdmin";
 import ManageProductsAdmin from "./pages/ManageProductsAdmin";
 import AddParcel from "./pages/AddParcel";
 
