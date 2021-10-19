@@ -41,8 +41,9 @@ class MyNavbar extends React.Component {
               Parcels
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem>Parcels List</DropdownItem>
-              <DropdownItem>Manage Parcel</DropdownItem>
+              <DropdownItem>
+                <Link to="/admin/addparcel">Add Parcel</Link>
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
           <UncontrolledDropdown nav inNavbar>
@@ -99,15 +100,42 @@ class MyNavbar extends React.Component {
           <Link to="/home"><button class="btn" type="btn" id="btn-regis">Choose Parcel</button></Link>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src={Avatar} alt="avatar" height="30" /> Hello,
-                {this.props.userGlobal.username}
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownMenuLink"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img src={Avatar} alt="avatar" height="30" /> Hello,
+              {this.props.userGlobal.username}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><Link class="dropdown-item" to="/Profile"> Edit Profile </Link></li>
-              <li><Link class="dropdown-item" to="/cart"> Cart ({this.props.cartGlobal.cartList.length})</Link></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" onClick={this.props.logoutUser} href="#">Log Out</a></li>
+              <li>
+                <Link class="dropdown-item" to="/Profile">
+                  {" "}
+                  Edit Profile{" "}
+                </Link>
+              </li>
+              <li>
+                <Link class="dropdown-item" to="/cart">
+                  {" "}
+                  Cart ({this.props.cartGlobal.cartList.length})
+                </Link>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  onClick={this.props.logoutUser}
+                  href="#"
+                >
+                  Log Out
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
