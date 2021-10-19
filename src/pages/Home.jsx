@@ -104,7 +104,8 @@ class Home extends React.Component {
         return (
             <div className="container mt-5">
                 <div className="row">
-                    <div className="col-3">
+
+                    <div className="col-sm-2 " style={{"min-width":135}}>
                         <div className="card">
                             <div className="card-header">
                                 <strong>Filter Product</strong>
@@ -117,52 +118,53 @@ class Home extends React.Component {
                                     type="text"
                                     className="form-control mb-3"
                                 />
-                        <label htmlFor="searchCategory">Product Category</label>
-                        <select onChange={this.searchInputHandler} name="searchCategory" className="form-control">
-                            <option value="">All Item</option>
-                            <option value="quick parcel">Quick Parcel </option>
-                            <option value="customized parcel">Customized parcel</option>
-                        </select>
-                        <button onClick={this.searchBtnHandler} className="btn btn-primary mt-3">
-                            Search
-                        </button>
-                    </div>
-                    </div>
-                    <div className="card mt-4">
-                        <div className="card-header">
-                            <strong>Sort Product</strong>
+                                <label htmlFor="searchCategory">Product Category</label>
+                                <select onChange={this.searchInputHandler} name="searchCategory" className="form-control">
+                                    <option value="">All Item</option>
+                                    <option value="quick parcel">Quick Parcel </option>
+                                    <option value="customized parcel">Customized parcel</option>
+                                </select>
+                                <button onClick={this.searchBtnHandler} className="btn btn-primary mt-3">
+                                    Search
+                                </button>
+                            </div>
                         </div>
-                        <div className="card-body">
-                            <label htmlFor="sortBy">Sort By</label>
-                            <select onChange={this.searchInputHandler} name="sortBy" className="form-control">
-                                <option value="">Default</option>
-                                <option value="lowPrice">Lowest Price</option>
-                                <option value="highPrice">Highest Price</option>
-                                <option value="az">A-Z</option>
-                                <option value="za">Z-A</option>
-                            </select>
+                        <div className="card mt-4">
+                            <div className="card-header">
+                                <strong>Sort Product</strong>
+                            </div>
+                            <div className="card-body">
+                                <label htmlFor="sortBy">Sort By</label>
+                                <select onChange={this.searchInputHandler} name="sortBy" className="form-control">
+                                    <option value="">Default</option>
+                                    <option value="lowPrice">Lowest Price</option>
+                                    <option value="highPrice">Highest Price</option>
+                                    <option value="az">A-Z</option>
+                                    <option value="za">Z-A</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="mt-3">
+                            <div className="d-flex flex-row justify-content-between align-items-center">
+                                <button disabled={this.state.page ===1} onClick={this.prevPageHandler} className="btn btn-dark">
+                                    {"<"}
+                                </button>
+                                <div className="text-center">Page {this.state.page} of {this.state.maxPage}</div>
+                                <button disabled={this.state.page === this.state.maxPage}onClick={this.nextPageHandler} className="btn btn-dark">
+                                    {">"}
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div className="mt-3">
-                        <div className="d-flex flex-row justify-content-between align-items-center">
-                            <button disabled={this.state.page ===1} onClick={this.prevPageHandler} className="btn btn-dark">
-                                {"<"}
-                            </button>
-                            <div className="text-center">Page {this.state.page} of {this.state.maxPage}</div>
-                            <button disabled={this.state.page === this.state.maxPage}onClick={this.nextPageHandler} className="btn btn-dark">
-                                {">"}
-                            </button>
+
+                    <div className="col-sm-10">
+                        <div className="d-flex flex-wrap flex-row">
+                            {this.renderProduct()}
                         </div>
                     </div>
-                </div>
-                <div className="col-9">
-                    <div className="d-flex flex-wrap flex-row">
-                        {/* <ProductCard/> */}
-                        {this.renderProduct()}
-                    </div>
-                </div>
-            </div>    
-        </div>
+
+                </div>    
+            </div>
         )
     }
 }

@@ -52,7 +52,10 @@ class ProductCard extends React.Component {
                     <span className="text-muted">Rp. {this.props.productData.harga_jual.toLocaleString()}</span>
                 </div>
                 <div className="d-flex flex-row justify-content-end">
-                    <button onClick={()=>this.addToCartHandler(this.props.productData.id_parcel,this.props.productData.harga_jual,this.props.productData.parcel_name,this.props.productData.photo_parcel)} className="btn btn-primary mt-2">Add To Cart</button>
+                    <Link to={`/ProductDetail/${this.props.productData.id_parcel}`} style={{ textDecoration:"none", color: "inherit" }}>
+                        <button className="btn btn-primary mt-2">Detail</button>
+                    </Link>
+                    {/* <button onClick={()=>this.addToCartHandler(this.props.productData.id_parcel,this.props.productData.harga_jual,this.props.productData.parcel_name,this.props.productData.photo_parcel)} className="btn btn-primary mt-2">Add To Cart</button> */}
                 </div>
             </div>
             </div>

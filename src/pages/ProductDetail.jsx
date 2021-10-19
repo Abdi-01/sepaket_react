@@ -83,32 +83,45 @@ class ProductDetail extends React.Component {
                    <div className="alert alert-warning mt-3">Product with ID {this.props.match.params.productId} has not been found</div>
                    :
                <div className="row mt-3">
-                   <div className="col-6">
+                   <div className="col-sm-4">
                        <img
-                       style ={{width:"100%"}}
+                       style ={{width:"100%", "max-width":350, "min-width":150}}
                        src={this.state.productData.photo_parcel}
-                       alt=""
+                       alt="parcel"
                        />
                    </div>
-                   <div className="col-6 d-flex flex-column justify-content-center">
-                       <h4>{this.state.productData.parcel_name}</h4>
+                   <div className="col-sm-5 d-flex flex-column justify-content-center">
+                        <ul class="">
+                            <li>mix & match gift items</li>
+                            <li>get free exclusive & beautiful card</li>
+                            <li>gift delivery to all Indonesia area</li>
+                            <li>sameday delivery available for Jabodetabek</li>
+                        </ul>
+                   </div>
+                   <div className="col-sm-3 d-flex flex-column justify-content-center">
+                       <h5>{this.state.productData.parcel_name}</h5>
                        <h5>Rp {this.state.harga.toLocaleString()}</h5>
                        
-                       <p>          
-                           {this.state.productData.description}
-                       </p>
-                       <div className="d-flex flex-row align-item-center">
-                           <button onClick={()=>this.qtyBtnHandler("decrement")} className="btn btn-primary mr-4">
-                               -
-                           </button>
-                           <div className="m-4"> {this.state.quantity} </div>
-                           <button onClick={()=>this.qtyBtnHandler("increment")} className="btn btn-primary mr-4">
-                               +
-                           </button>
-                       </div>
-                       <button onClick={this.addToCartHandler} className="btn btn-success mt-3">
-                           Add To Cart
-                       </button>
+                       {         
+                           this.state.productData.category =="customized parcel"?
+                           <p>oke</p>
+                           :
+                           <>
+                       
+                            <div className="d-flex flex-row align-item-center">
+                                <button onClick={()=>this.qtyBtnHandler("decrement")} className="btn btn-primary">
+                                    -
+                                </button>
+                                <div className="m-2"> {this.state.quantity} </div>
+                                <button onClick={()=>this.qtyBtnHandler("increment")} className="btn btn-primary">
+                                    +
+                                </button>
+                            </div>
+                            <button onClick={this.addToCartHandler} className="btn btn-success mt-3">
+                                Add To Cart
+                            </button>
+                            </>
+                        }
                    </div>
                </div>
                }

@@ -96,7 +96,7 @@ class frontPage extends React.Component {
                                 <div id="collapseExample2" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <p>
-                                        Customers can adjust the arrival time by inputting the expected arrival time in the order form. Box And Tale will ship the gift box accordingly (disclaimer : arrival time may be late if the courier experiences the unexpected, please allocate some spare time and input the exact address to avoid delay).
+                                        Customers can adjust the arrival time by inputting the expected arrival time in the order form. Sepaket will ship the gift box accordingly (disclaimer : arrival time may be late if the courier experiences the unexpected, please allocate some spare time and input the exact address to avoid delay).
                                         </p>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@ class frontPage extends React.Component {
                                 <div id="collapseExample4" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <p>
-                                        Currently Box & Tale only delivers within the Indonesia area. But, we can help if you are overseas and wanting to deliver gifts to your loved ones in Indonesia.
+                                        Currently Sepaket only delivers within the Indonesia area. But, we can help if you are overseas and wanting to deliver gifts to your loved ones in Indonesia.
                                         </p>
                                     </div>
                                 </div>
@@ -175,7 +175,7 @@ class frontPage extends React.Component {
                                 </div>
 
                                 <div class="ml-lg-auto col-lg-5 col-12">
-                                    <input type="submit" class="form-control submit-btn" value="Send Button"/>
+                                    <input type="submit" class="form-control submit-btn" value="Send"/>
                                 </div>
                                 </div>
                             </form>
