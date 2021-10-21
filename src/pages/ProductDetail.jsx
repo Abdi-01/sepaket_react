@@ -3,7 +3,8 @@ import Axios from 'axios'
 import { API_URL } from '../constants/API'
 import { connect } from 'react-redux'
 import { getCartData } from '../redux/actions/cart'
-import ProductCard from '../components/ItemCard'
+import ItemCard from '../components/ItemCard'
+import BoxCard from '../components/BoxCard'
 
 class ProductDetail extends React.Component {
     state ={
@@ -24,7 +25,10 @@ class ProductDetail extends React.Component {
         filterDrink: [],
         filterSnack: [],
 
-        page: 1,
+        pageCoklat: 1,
+        pageDrink: 1,
+        pageSnack: 1,
+        
         maxPageCoklat: 0,
         maxPageDrink: 0,
         maxPageSnack: 0,
@@ -33,6 +37,8 @@ class ProductDetail extends React.Component {
         searchCoklat: "",
         searchDrink: "",
         searchSnack: "",
+
+        boxData:[]
     }
 
     fetchParcelData = () => {
@@ -70,9 +76,9 @@ class ProductDetail extends React.Component {
         this.setState({
             itemDataCoklat, itemDataDrink, itemDataSnack,customItem: true,
             filterCoklat: itemDataCoklat ,filterDrink: itemDataDrink ,filterSnack: itemDataSnack,
-            maxPageCoklat : Math.ceil(itemDataCoklat.length / this.state.itemPerPage),
-            maxPageDrink : Math.ceil(itemDataDrink.length / this.state.itemPerPage),
-            maxPageSnack : Math.ceil(itemDataSnack.length / this.state.itemPerPage), page: 1,
+            maxPageCoklat : Math.ceil(itemDataCoklat.length / this.state.itemPerPage),pageCoklat:1,
+            maxPageDrink : Math.ceil(itemDataDrink.length / this.state.itemPerPage), pageDrink:1,
+            maxPageSnack : Math.ceil(itemDataSnack.length / this.state.itemPerPage), pageSnack: 1,
         })
     }
     
@@ -82,29 +88,50 @@ class ProductDetail extends React.Component {
         
     }
     
-    renderProduct = (filteredData) =>{
-        const indexAwal = (this.state.page - 1)*this.state.itemPerPage
+    renderProduct = (filteredData,page, addToBoxHandler) =>{
+        const indexAwal = (page - 1)*this.state.itemPerPage
         let rawData =[...filteredData]
 
         const dataTampil = rawData.slice(indexAwal, indexAwal+this.state.itemPerPage)
 
         return dataTampil.map((val)=>{
-            return <ProductCard productData={val}/>
+            return <ItemCard productData={val}  addToBoxFunc={addToBoxHandler}/>
         })
     }
 
 
-    nextPageHandler = () => {
-        if (this.state.page < this.state.maxPage) {
-            this.setState({page: this.state.page + 1})
+    nextPageHandlerCoklat = () => {
+        if (this.state.pageCoklat < this.state.maxPageCoklat) {
+            this.setState({pageCoklat: this.state.pageCoklat + 1})
+        }
+    }
+    nextPageHandlerDrink = () => {
+        if (this.state.pageDrink < this.state.maxPageDrink) {
+            this.setState({pageDrink: this.state.pageDrink + 1})
+        }
+    }
+    nextPageHandlerSnack = () => {
+        if (this.state.pageSnack < this.state.maxPageSnack) {
+            this.setState({pageSnack: this.state.pageSnack + 1})
         }
     }
 
-    prevPageHandler = () => {
-        if (this.state.page > 1 ) {
-            this.setState({page: this.state.page - 1})
+    prevPageHandlerCoklat = () => {
+        if (this.state.pageCoklat > 1) {
+            this.setState({pageCoklat: this.state.pageCoklat - 1})
         }
     }
+    prevPageHandlerDrink = () => {
+        if (this.state.pageDrink > 1) {
+            this.setState({pageDrink: this.state.pageDrink - 1})
+        }
+    }
+    prevPageHandlerSnack = () => {
+        if (this.state.pageSnack > 1) {
+            this.setState({pageSnack: this.state.pageSnack - 1})
+        }
+    }
+    
 
     searchInputHandler = (event) => {
         const name = event.target.name
@@ -119,7 +146,7 @@ class ProductDetail extends React.Component {
             return val.product_name.toLowerCase().includes(this.state.searchCoklat.toLowerCase())
         })
 
-        this.setState({ filterCoklat, maxPage : Math.ceil(filterCoklat.length / this.state.itemPerPage), page: 1})
+        this.setState({ filterCoklat, maxPageCoklat : Math.ceil(filterCoklat.length / this.state.itemPerPage), pageCoklat: 1})
     }
 
     searchBtnHandlerDrink = () => {
@@ -138,6 +165,19 @@ class ProductDetail extends React.Component {
         })
 
         this.setState({ filterSnack, maxPage : Math.ceil(filterSnack.length / this.state.itemPerPage), page: 1})
+    }
+
+    addToBoxHandlerCoklat = (item_data) => {
+        this.setState({itemCoklat:this.state.itemCoklat+1})
+        this.state.boxData.push(item_data)
+    }
+    addToBoxHandlerDrink = (item_data) => {
+        this.setState({itemDrink:this.state.itemDrink+1})
+        this.state.boxData.push(item_data)
+    }
+    addToBoxHandlerSnack = (item_data) => {
+        this.setState({itemSnack:this.state.itemSnack+1})
+        this.state.boxData.push(item_data)
     }
 
     qtyBtnHandler = (action) => {
@@ -268,14 +308,14 @@ class ProductDetail extends React.Component {
                                         <div id="collapse1" class="panel-collapse collapse">
                                             <div class="panel-body">
                                             <div className="d-flex flex-wrap flex-row">
-                                                {this.renderProduct(this.state.filterCoklat)}
+                                                {this.renderProduct(this.state.filterCoklat,this.state.pageCoklat, this.addToBoxHandlerCoklat)}
                                             </div>
                                             <div className="d-flex flex-row justify-content-between align-items-center">
-                                                <button disabled={this.state.page ===1} onClick={this.prevPageHandler} className="btn btn-dark">
+                                                <button disabled={this.state.pageCoklat ===1} onClick={this.prevPageHandlerCoklat} className="btn btn-dark">
                                                     {"<"}
                                                 </button>
-                                                <div className="text-center">Page {this.state.page} of {this.state.maxPage}</div>
-                                                <button disabled={this.state.page === this.state.maxPage}onClick={this.nextPageHandler} className="btn btn-dark">
+                                                <div className="text-center">Page {this.state.pageCoklat} of {this.state.maxPageCoklat}</div>
+                                                <button disabled={this.state.pageCoklat === this.state.maxPageCoklat}onClick={this.nextPageHandlerCoklat} className="btn btn-dark">
                                                     {">"}
                                                 </button>
                                             </div>
@@ -306,14 +346,14 @@ class ProductDetail extends React.Component {
                                         <div id="collapse2" class="panel-collapse collapse">
                                             <div class="panel-body">
                                             <div className="d-flex flex-wrap flex-row">
-                                                {this.renderProduct(this.state.filterDrink)}
+                                                {this.renderProduct(this.state.filterDrink,this.state.pageDrink,this.addToBoxHandlerDrink)}
                                             </div>
                                             <div className="d-flex flex-row justify-content-between align-items-center">
-                                                <button disabled={this.state.page ===1} onClick={this.prevPageHandler} className="btn btn-dark">
+                                                <button disabled={this.state.pageDrink ===1} onClick={this.prevPageHandlerDrink} className="btn btn-dark">
                                                     {"<"}
                                                 </button>
-                                                <div className="text-center">Page {this.state.page} of {this.state.maxPage}</div>
-                                                <button disabled={this.state.page === this.state.maxPage}onClick={this.nextPageHandler} className="btn btn-dark">
+                                                <div className="text-center">Page {this.state.pageDrink} of {this.state.maxPageDrink}</div>
+                                                <button disabled={this.state.pageDrink === this.state.maxPageDrink}onClick={this.nextPageHandlerDrink} className="btn btn-dark">
                                                     {">"}
                                                 </button>
                                             </div>
@@ -344,14 +384,14 @@ class ProductDetail extends React.Component {
                                         <div id="collapse3" class="panel-collapse collapse">
                                             <div class="panel-body">
                                             <div className="d-flex flex-wrap flex-row">
-                                                {this.renderProduct(this.state.filterSnack)}
+                                                {this.renderProduct(this.state.filterSnack,this.state.pageSnack, this.addToBoxHandlerSnack)}
                                             </div>
                                             <div className="d-flex flex-row justify-content-between align-items-center">
-                                                <button disabled={this.state.page ===1} onClick={this.prevPageHandler} className="btn btn-dark">
+                                                <button disabled={this.state.pageSnack ===1} onClick={this.prevPageHandlerSnack} className="btn btn-dark">
                                                     {"<"}
                                                 </button>
-                                                <div className="text-center">Page {this.state.page} of {this.state.maxPage}</div>
-                                                <button disabled={this.state.page === this.state.maxPage}onClick={this.nextPageHandler} className="btn btn-dark">
+                                                <div className="text-center">Page {this.state.pageSnack} of {this.state.maxPageSnack}</div>
+                                                <button disabled={this.state.pageSnack === this.state.maxPageSnack}onClick={this.nextPageHandlerSnack} className="btn btn-dark">
                                                     {">"}
                                                 </button>
                                             </div>
@@ -363,6 +403,37 @@ class ProductDetail extends React.Component {
                                 </div>
                             </div>
                         </div>
+
+                        <div class="mt-5 text-center">
+                        <h1>Box</h1>
+                        <table className="table">
+                            <thead className="thead-light">
+                                <tr>
+                                    <th>Name</th>
+                                    
+                                    <th>Image</th>
+                                    <th>Quantity</th>
+                                    
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            
+                        </table>
+                            {
+                                this.state.boxData.map((val)=>{
+                                    return <BoxCard BoxData={val}/>
+                                })
+                            }
+
+                    <div className="bg-light text-center">
+                        {
+                            this.state.boxData.length?
+                            <button onClick={()=> this.deleteCartHandler(this.props.BoxData.id_product) } className="btn btn-success">Add To Cart</button>
+                            : null
+                        }
+                    </div>
+                        </div>
+                            
                         </>
                         : null
                     }
