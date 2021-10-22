@@ -73,7 +73,9 @@ class MyNavbar extends React.Component {
               Report
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem>Profit/Loss Report</DropdownItem>
+              <DropdownItem>
+                <Link to="/admin/profitloss">Profit/Loss Report</Link>
+              </DropdownItem>
               <DropdownItem>Sales Report</DropdownItem>
               <DropdownItem>Revenue</DropdownItem>
             </DropdownMenu>
