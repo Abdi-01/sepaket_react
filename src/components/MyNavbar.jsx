@@ -44,6 +44,9 @@ class MyNavbar extends React.Component {
               <DropdownItem>
                 <Link to="/admin/addparcel">Add Parcel</Link>
               </DropdownItem>
+              <DropdownItem>
+                <Link to="/admin/manageparcel">Manage Parcel</Link>
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
           <UncontrolledDropdown nav inNavbar>
@@ -97,7 +100,11 @@ class MyNavbar extends React.Component {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
           <li className="nav-item">
-          <Link to="/home"><button class="btn" type="btn" id="btn-regis">Choose Parcel</button></Link>
+            <Link to="/home">
+              <button class="btn" type="btn" id="btn-regis">
+                Choose Parcel
+              </button>
+            </Link>
           </li>
           <li class="nav-item dropdown">
             <a

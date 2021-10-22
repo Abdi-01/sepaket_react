@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import MyNavbar from "./components/MyNavbar";
 import ManageProductsAdmin from "./pages/ManageProductsAdmin";
+import ManageParcelAdmin from "./pages/ManageParcelAdmin";
 import AddParcel from "./pages/AddParcel";
 import FrontPage from "./pages/frontPage";
 
@@ -49,6 +50,7 @@ class App extends React.Component {
           <Route component={Profile} path="/Profile" />
           <Route component={ManageProductsAdmin} path="/admin/manageproducts" />
           <Route component={AddParcel} path="/admin/addparcel" />
+          <Route component={ManageParcelAdmin} path="/admin/manageparcel" />
 
           <Route
             component={RestockProductsAdmin}
