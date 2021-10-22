@@ -6,7 +6,7 @@ import { API_URL } from '../constants/API'
 import { connect } from 'react-redux'
 import { getCartData } from '../redux/actions/cart'
 
-class ItemCard extends React.Component {
+class BoxCard extends React.Component {
     
     addToCartHandler = (a,b,c,d) => {
         Axios.get(`${API_URL}/carts/add-cart`,{
@@ -39,22 +39,26 @@ class ItemCard extends React.Component {
             }
         })
     }
-    
+
     render (){
         return (
-            <div className="card product-card">
-                <img src={this.props.productData.photo_product} alt="foto items"/>
-            <div className="mt-2">
-                <div>
-                    <span className="text-muted">{this.props.productData.product_name}</span>
-                </div>
-                <div className="d-flex flex-row justify-content-end">
-                   
-                        <button onClick={()=>this.props.addToBoxFunc(this.props.productData)} className="btn btn-success mt-2">Add To Box</button>
-                    
-                    {/* <button onClick={()=>this.addToCartHandler(this.props.productData.id_parcel,this.props.productData.harga_jual,this.props.productData.parcel_name,this.props.productData.photo_parcel)} className="btn btn-primary mt-2">Add To Cart</button> */}
-                </div>
-            </div>
+            <div className="text-center">
+
+                <table className="table">
+                    <tbody>
+                        <tr>
+                            <td className="align-middle">{this.props.BoxData.product_name}</td>
+                            <td className="align-middle">
+                                <img src={this.props.BoxData.photo_product} alt="" style={{height:"120px"}} />
+                            </td>
+                            <td className="align-middle">1</td>
+                            <td className="align-middle">
+                                <button className="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
             </div>
         )
     }
@@ -70,4 +74,4 @@ const mapDispatchToProps = {
     getCartData,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemCard)
+export default connect(mapStateToProps, mapDispatchToProps)(BoxCard)
