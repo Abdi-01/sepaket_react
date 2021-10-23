@@ -23,6 +23,8 @@ import { getCartData } from "./redux/actions/cart";
 import RestockProductsAdmin from "./pages/RestockProductsAdmin";
 import forgotPassword from "./pages/Auth/forgotPassword";
 import ProfitLoss from "./pages/ProfitLoss";
+import SalesReport from "./pages/SalesReport";
+import Revenue from "./pages/Revenue";
 
 class App extends React.Component {
   componentDidMount() {
@@ -53,6 +55,8 @@ class App extends React.Component {
           <Route component={AddParcel} path="/admin/addparcel" />
           <Route component={ManageParcelAdmin} path="/admin/manageparcel" />
           <Route component={ProfitLoss} path="/admin/profitloss" />
+          <Route component={SalesReport} path="/admin/salesreport" />
+          <Route component={Revenue} path="/admin/revenue" />
 
           <Route
             component={RestockProductsAdmin}

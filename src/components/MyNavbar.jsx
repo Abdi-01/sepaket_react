@@ -63,9 +63,7 @@ class MyNavbar extends React.Component {
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem>View Transactions</DropdownItem>
-              <DropdownItem>Option 2</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem>Reset</DropdownItem>
+              <DropdownItem>Manage Transaction</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
           <UncontrolledDropdown nav inNavbar>
@@ -76,8 +74,12 @@ class MyNavbar extends React.Component {
               <DropdownItem>
                 <Link to="/admin/profitloss">Profit/Loss Report</Link>
               </DropdownItem>
-              <DropdownItem>Sales Report</DropdownItem>
-              <DropdownItem>Revenue</DropdownItem>
+              <DropdownItem>
+                <Link to="/admin/salesreport">Sales Report</Link>
+              </DropdownItem>
+              <DropdownItem>
+                <Link to="/admin/revenue">Revenue</Link>
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
           <UncontrolledDropdown nav inNavbar>
