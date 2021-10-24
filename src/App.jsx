@@ -25,6 +25,7 @@ import forgotPassword from "./pages/Auth/forgotPassword";
 import ProfitLoss from "./pages/ProfitLoss";
 import SalesReport from "./pages/SalesReport";
 import Revenue from "./pages/Revenue";
+import ManageTransaction from "./pages/ManageTransaction";
 
 class App extends React.Component {
   componentDidMount() {
@@ -57,6 +58,10 @@ class App extends React.Component {
           <Route component={ProfitLoss} path="/admin/profitloss" />
           <Route component={SalesReport} path="/admin/salesreport" />
           <Route component={Revenue} path="/admin/revenue" />
+          <Route
+            component={ManageTransaction}
+            path="/admin/managetransaction"
+          />
 
           <Route
             component={RestockProductsAdmin}
