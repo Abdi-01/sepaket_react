@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import "../assets/styles/managetransaction.css";
 import Axios from "axios";
 import { API_URL } from "../constants/API";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import DatePicker from "react-datepicker";
 
 function ManageTransaction() {
+  const userGlobal = useSelector((state) => state.user);
   const [dataTransaksi, setDataTransaksi] = useState([]);
   const [statusOption, setStatusOption] = useState([]);
   const [dataTrxProducts, setDataTrxProducts] = useState([]);
@@ -112,7 +114,7 @@ function ManageTransaction() {
             <button
               onClick={() => confirmTransaction(val.id_trx)}
               className="btn btn-success"
-              disabled={val.status !== "pending"}
+              disabled={val.status === "paid" || val.status === "rejected"}
             >
               Confirm
             </button>
@@ -121,7 +123,7 @@ function ManageTransaction() {
             <button
               onClick={() => rejectTransaction(val.id_trx)}
               className="btn btn-danger"
-              disabled={val.status !== "pending"}
+              disabled={val.status === "paid" || val.status === "rejected"}
             >
               Reject
             </button>
@@ -183,62 +185,67 @@ function ManageTransaction() {
     fetchTrxProductsStock();
     fetchStatus();
   }, []);
-  return (
-    <div>
-      <div className="col-12 text-center mb-4">
-        <h1>Manage Transaction</h1>
+
+  if (userGlobal.role !== "admin") {
+    return <Redirect to="/" />;
+  } else {
+    return (
+      <div>
+        <div className="col-12 text-center mb-4">
+          <h1>Manage Transaction</h1>
+        </div>
+        <div className="d-flex justify-content-between align-items-center col-12 date">
+          <label>from: </label>
+          <DatePicker
+            dateFormat="dd-MM-yyyy"
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+          />
+          <label>until: </label>
+          <DatePicker
+            dateFormat="dd-MM-yyyy"
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+          />
+          <select
+            className="form-select ml-2"
+            aria-label="Default select example"
+            onChange={selectHandler}
+          >
+            <option value="all">All Status</option>
+            {statusOption.map((val) => (
+              <option value={val.status}>{val.status}</option>
+            ))}
+          </select>
+          <button onClick={getTrxData} type="button" class="btn btn-info">
+            Show
+          </button>
+        </div>
+        <div className="text-center data">
+          <table className="table table-hover">
+            <thead className="thead-light">
+              <th>ID Trx</th>
+              <th>Trx Date</th>
+              <th>User Name</th>
+              <th>Total Trx</th>
+              <th>Transfer Receipt</th>
+              <th>Transfer Date</th>
+              <th>Status</th>
+              <th colSpan="2">Action</th>
+            </thead>
+            <tbody>{renderTransaksi()}</tbody>
+          </table>
+        </div>
       </div>
-      <div className="d-flex justify-content-between align-items-center col-12 date">
-        <label>from: </label>
-        <DatePicker
-          dateFormat="dd-MM-yyyy"
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          selectsStart
-          startDate={startDate}
-          endDate={endDate}
-        />
-        <label>until: </label>
-        <DatePicker
-          dateFormat="dd-MM-yyyy"
-          selected={endDate}
-          onChange={(date) => setEndDate(date)}
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-        />
-        <select
-          className="form-select ml-2"
-          aria-label="Default select example"
-          onChange={selectHandler}
-        >
-          <option value="all">All Status</option>
-          {statusOption.map((val) => (
-            <option value={val.status}>{val.status}</option>
-          ))}
-        </select>
-        <button onClick={getTrxData} type="button" class="btn btn-info">
-          Show
-        </button>
-      </div>
-      <div className="text-center data">
-        <table className="table table-hover">
-          <thead className="thead-light">
-            <th>ID Trx</th>
-            <th>Trx Date</th>
-            <th>User Name</th>
-            <th>Total Trx</th>
-            <th>Transfer Receipt</th>
-            <th>Transfer Date</th>
-            <th>Status</th>
-            <th colSpan="2">Action</th>
-          </thead>
-          <tbody>{renderTransaksi()}</tbody>
-        </table>
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
 const mapStateToProps = (state) => {
