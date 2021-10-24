@@ -62,8 +62,9 @@ class MyNavbar extends React.Component {
               Transactions
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem>View Transactions</DropdownItem>
-              <DropdownItem>Manage Transaction</DropdownItem>
+              <DropdownItem>
+                <Link to="/admin/managetransaction">Manage Transaction</Link>
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
           <UncontrolledDropdown nav inNavbar>
