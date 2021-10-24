@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getCartData } from '../redux/actions/cart'
 import ItemCard from '../components/ItemCard'
 import BoxCard from '../components/BoxCard'
+import { Redirect } from 'react-router-dom'
 
 class ProductDetail extends React.Component {
     state ={
@@ -88,14 +89,14 @@ class ProductDetail extends React.Component {
         
     }
     
-    renderProduct = (filteredData,page, addToBoxHandler) =>{
+    renderProduct = (filteredData,page, addToBoxHandler, deleteFunc) =>{
         const indexAwal = (page - 1)*this.state.itemPerPage
         let rawData =[...filteredData]
 
         const dataTampil = rawData.slice(indexAwal, indexAwal+this.state.itemPerPage)
 
         return dataTampil.map((val)=>{
-            return <ItemCard productData={val}  addToBoxFunc={addToBoxHandler}/>
+            return <ItemCard productData={val}  addToBoxFunc={addToBoxHandler} />
         })
     }
 
@@ -167,24 +168,91 @@ class ProductDetail extends React.Component {
         this.setState({ filterSnack, maxPage : Math.ceil(filterSnack.length / this.state.itemPerPage), page: 1})
     }
 
-    addToBoxHandlerCoklat = (item_data) => {
-        this.setState({itemCoklat:this.state.itemCoklat+1})
-        this.state.boxData.push(item_data)
-    }
-    addToBoxHandlerDrink = (item_data) => {
-        this.setState({itemDrink:this.state.itemDrink+1})
-        this.state.boxData.push(item_data)
-    }
-    addToBoxHandlerSnack = (item_data) => {
-        this.setState({itemSnack:this.state.itemSnack+1})
-        this.state.boxData.push(item_data)
+    addToBoxHandler = (item_data) => {
+        if(item_data.id_cat===3){this.setState({itemCoklat:this.state.itemCoklat+1})}
+        else if(item_data.id_cat===2){this.setState({itemDrink:this.state.itemDrink+1})}
+        else if(item_data.id_cat===1){this.setState({itemSnack:this.state.itemSnack+1})}
+        
+        let exist = false
+        this.state.boxData.forEach((val,idx)=>{
+            if(val.id_product === item_data.id_product){
+                exist = true
+                this.state.boxData.splice(idx, 1, {...val, qty:val.qty+1})
+            }
+        })
+        if(!exist){this.state.boxData.push({...item_data, qty:1})}
+        
     }
 
-    qtyBtnHandler = (action) => {
+    deleteBoxHandler = (id,cat,qty) => {
+        const boxData= this.state.boxData.filter((val)=>{
+
+            return val.id_product !== id
+        })
+
+        if(cat===3){this.setState({ boxData, itemCoklat:this.state.itemCoklat - qty})}
+        else if(cat===2){this.setState({ boxData, itemDrink:this.state.itemDrink - qty})}
+        else if(cat===1){this.setState({ boxData, itemSnack:this.state.itemSnack - qty})}
+    }
+
+    qtyBtnHandler = (action,item_data) => {
         if (action === "increment"){
-            this.setState({quantity: this.state.quantity + 1})
-        } else if (action === "decrement" && this.state.quantity > 1){
-            this.setState({quantity: this.state.quantity - 1})
+            if(item_data.id_cat===3 && this.state.itemCoklat < this.state.productData.coklat){
+                this.setState({itemCoklat:this.state.itemCoklat+1})
+                this.state.boxData.forEach((val,idx)=>{
+                    if(val.id_product === item_data.id_product){
+                        this.state.boxData.splice(idx, 1, {...val, qty:val.qty+1})
+                    }
+                })
+            }
+            else if(item_data.id_cat===2 && this.state.itemDrink < this.state.productData.drink){
+                this.setState({itemDrink:this.state.itemDrink+1})
+                this.state.boxData.forEach((val,idx)=>{
+                    if(val.id_product === item_data.id_product){
+                        this.state.boxData.splice(idx, 1, {...val, qty:val.qty+1})
+                    }
+                })
+            }
+            else if(item_data.id_cat===1 && this.state.itemSnack < this.state.productData.snack){
+                this.setState({itemSnack:this.state.itemSnack+1})
+                this.state.boxData.forEach((val,idx)=>{
+                    if(val.id_product === item_data.id_product){
+                        this.state.boxData.splice(idx, 1, {...val, qty:val.qty+1})
+                    }
+                })
+            }
+
+        } else if (action === "decrement"){
+            if(item_data.id_cat===3 && this.state.itemCoklat > 1){
+                this.state.boxData.forEach((val,idx)=>{
+                    if(val.id_product === item_data.id_product){
+                        if(val.qty>1){
+                            this.state.boxData.splice(idx, 1, {...val, qty:val.qty-1})
+                            this.setState({itemCoklat:this.state.itemCoklat-1})
+                        }
+                    }
+                })
+            }
+            else if(item_data.id_cat===2 && this.state.itemDrink > 1){
+                this.state.boxData.forEach((val,idx)=>{
+                    if(val.id_product === item_data.id_product){
+                        if(val.qty>1){
+                            this.state.boxData.splice(idx, 1, {...val, qty:val.qty-1})
+                            this.setState({itemDrink:this.state.itemDrink-1})
+                        }
+                    }
+                })
+            }
+            else if(item_data.id_cat===1 && this.state.itemSnack > 1){
+                this.state.boxData.forEach((val,idx)=>{
+                    if(val.id_product === item_data.id_product){
+                        if(val.qty>1){
+                            this.state.boxData.splice(idx, 1, {...val, qty:val.qty-1})
+                            this.setState({itemSnack:this.state.itemSnack-1})
+                        }
+                    }
+                })
+            }
         }
     }
     
@@ -222,7 +290,10 @@ class ProductDetail extends React.Component {
     
 
     render(){
-        console.log(this.state.itemDataCoklat);
+        if (this.props.userGlobal.status !== "verified"){
+            return <Redirect to="/Login" />
+        }
+        console.log(this.state.boxData);
         return (
             <div className="container">
             {
@@ -287,116 +358,186 @@ class ProductDetail extends React.Component {
                                 <div class="panel-group accordion-main" id="accordion">
 
                                     <div class="panel">
-                                        <div class="d-grid gap-2">
-                                            <button class="btn d-flex panel-title " type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
-                                                <div class="me-5">
-                                                    <div>Coklat</div>
-                                                    <div>{this.state.itemCoklat} / {this.state.productData.coklat}</div> 
+                                            {
+                                                this.state.itemCoklat === this.state.productData.coklat ?
+                                                <div class="d-grid gap-2">
+                                                    <button class="btn d-flex panel-title disabled  " type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
+                                                        <div class="me-5">
+                                                            <div>Coklat</div>
+                                                            <div>{this.state.itemCoklat} / {this.state.productData.coklat}</div> 
+                                                        </div>
+                                                        
+                                                        <input
+                                                            onChange={this.searchInputHandler}
+                                                            name="searchCoklat"
+                                                            type="text"
+                                                            className="form-control ms-5"
+                                                        />
+                                                        <button onClick={this.searchBtnHandlerCoklat} className="btn btn-primary">
+                                                            Search
+                                                        </button>
+                                                    </button>
                                                 </div>
-                                                
-                                                <input
-                                                    onChange={this.searchInputHandler}
-                                                    name="searchCoklat"
-                                                    type="text"
-                                                    className="form-control ms-5"
-                                                />
-                                                <button onClick={this.searchBtnHandlerCoklat} className="btn btn-primary">
-                                                    Search
-                                                </button>
-                                            </button>
-                                        </div>
-                                        <div id="collapse1" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                            <div className="d-flex flex-wrap flex-row">
-                                                {this.renderProduct(this.state.filterCoklat,this.state.pageCoklat, this.addToBoxHandlerCoklat)}
-                                            </div>
-                                            <div className="d-flex flex-row justify-content-between align-items-center">
-                                                <button disabled={this.state.pageCoklat ===1} onClick={this.prevPageHandlerCoklat} className="btn btn-dark">
-                                                    {"<"}
-                                                </button>
-                                                <div className="text-center">Page {this.state.pageCoklat} of {this.state.maxPageCoklat}</div>
-                                                <button disabled={this.state.pageCoklat === this.state.maxPageCoklat}onClick={this.nextPageHandlerCoklat} className="btn btn-dark">
-                                                    {">"}
-                                                </button>
-                                            </div>
-                                                
-                                            </div>
-                                        </div>
+                                                :
+                                                <>
+                                                <div class="d-grid gap-2">
+                                                    <button class="btn d-flex panel-title  " type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
+                                                        <div class="me-5">
+                                                            <div>Coklat</div>
+                                                            <div>{this.state.itemCoklat} / {this.state.productData.coklat}</div> 
+                                                        </div>
+                                                        
+                                                        <input
+                                                            onChange={this.searchInputHandler}
+                                                            name="searchCoklat"
+                                                            type="text"
+                                                            className="form-control ms-5"
+                                                        />
+                                                        <button onClick={this.searchBtnHandlerCoklat} className="btn btn-primary">
+                                                            Search
+                                                        </button>
+                                                    </button>
+                                                </div>
+                                                <div id="collapse1" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <div className="d-flex flex-wrap flex-row">
+                                                            {this.renderProduct(this.state.filterCoklat,this.state.pageCoklat, this.addToBoxHandler)}
+                                                        </div>
+                                                        <div className="d-flex flex-row justify-content-between align-items-center">
+                                                            <button disabled={this.state.pageCoklat ===1} onClick={this.prevPageHandlerCoklat} className="btn btn-dark">
+                                                                {"<"}
+                                                            </button>
+                                                            <div className="text-center">Page {this.state.pageCoklat} of {this.state.maxPageCoklat}</div>
+                                                            <button disabled={this.state.pageCoklat === this.state.maxPageCoklat}onClick={this.nextPageHandlerCoklat} className="btn btn-dark">
+                                                                {">"}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </>
+                                            }
                                     </div>
 
                                     <div class="panel">
-                                        <div class="d-grid gap-2">
-                                            <button class="btn d-flex panel-title " type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
-                                                <div class="me-5">
-                                                    <div>Drink</div>
-                                                    <div>{this.state.itemDrink} / {this.state.productData.drink}</div> 
+                                            {
+                                                this.state.itemDrink === this.state.productData.drink ?
+                                                <div class="d-grid gap-2">
+                                                    <button class="btn d-flex panel-title disabled  " type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                                                        <div class="me-5">
+                                                            <div>Drink</div>
+                                                            <div>{this.state.itemDrink} / {this.state.productData.drink}</div> 
+                                                        </div>
+                                                        
+                                                        <input
+                                                             onChange={this.searchInputHandler}
+                                                             name="searchDrink"
+                                                             type="text"
+                                                             className="form-control ms-5"
+                                                        />
+                                                        <button onClick={this.searchBtnHandlerDrink} className="btn btn-primary">
+                                                            Search
+                                                        </button>
+                                                    </button>
                                                 </div>
-                                                
-                                                <input
-                                                    onChange={this.searchInputHandler}
-                                                    name="searchDrink"
-                                                    type="text"
-                                                    className="form-control ms-5"
-                                                />
-                                                <button onClick={this.searchBtnHandlerDrink} className="btn btn-primary">
-                                                    Search
-                                                </button>
-                                            </button>
-                                        </div>
-                                        <div id="collapse2" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                            <div className="d-flex flex-wrap flex-row">
-                                                {this.renderProduct(this.state.filterDrink,this.state.pageDrink,this.addToBoxHandlerDrink)}
-                                            </div>
-                                            <div className="d-flex flex-row justify-content-between align-items-center">
-                                                <button disabled={this.state.pageDrink ===1} onClick={this.prevPageHandlerDrink} className="btn btn-dark">
-                                                    {"<"}
-                                                </button>
-                                                <div className="text-center">Page {this.state.pageDrink} of {this.state.maxPageDrink}</div>
-                                                <button disabled={this.state.pageDrink === this.state.maxPageDrink}onClick={this.nextPageHandlerDrink} className="btn btn-dark">
-                                                    {">"}
-                                                </button>
-                                            </div>
-                                                
-                                            </div>
-                                        </div>
+                                                :
+                                                <>
+                                                <div class="d-grid gap-2">
+                                                    <button class="btn d-flex panel-title  " type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                                                        <div class="me-5">
+                                                            <div>Drink</div>
+                                                            <div>{this.state.itemDrink} / {this.state.productData.drink}</div> 
+                                                        </div>
+                                                        
+                                                        <input
+                                                             onChange={this.searchInputHandler}
+                                                             name="searchDrink"
+                                                             type="text"
+                                                             className="form-control ms-5"
+                                                        />
+                                                        <button onClick={this.searchBtnHandlerDrink} className="btn btn-primary">
+                                                            Search
+                                                        </button>
+                                                    </button>
+                                                </div>
+                                                <div id="collapse2" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <div className="d-flex flex-wrap flex-row">
+                                                            {this.renderProduct(this.state.filterDrink,this.state.pageDrink,this.addToBoxHandler)}
+                                                        </div>
+                                                        <div className="d-flex flex-row justify-content-between align-items-center">
+                                                            <button disabled={this.state.pageDrink ===1} onClick={this.prevPageHandlerDrink} className="btn btn-dark">
+                                                                {"<"}
+                                                            </button>
+                                                            <div className="text-center">Page {this.state.pageDrink} of {this.state.maxPageDrink}</div>
+                                                            <button disabled={this.state.pageDrink === this.state.maxPageDrink}onClick={this.nextPageHandlerDrink} className="btn btn-dark">
+                                                                {">"}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </>
+                                            }
                                     </div>
 
                                     <div class="panel">
-                                        <div class="d-grid gap-2">
-                                            <button class="btn d-flex panel-title " type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapseExample">
-                                                <div class="me-5">
-                                                    <div>Snack</div>
-                                                    <div>{this.state.itemSnack} / {this.state.productData.snack}</div> 
+                                            {
+                                                this.state.itemSnack === this.state.productData.snack ?
+                                                <div class="d-grid gap-2">
+                                                    <button class="btn d-flex panel-title disabled  " type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                                        <div class="me-5">
+                                                            <div>Snack</div>
+                                                            <div>{this.state.itemSnack} / {this.state.productData.snack}</div> 
+                                                        </div>
+                                                        
+                                                        <input
+                                                             onChange={this.searchInputHandler}
+                                                             name="searchSnack"
+                                                             type="text"
+                                                             className="form-control ms-5"
+                                                        />
+                                                        <button onClick={this.searchBtnHandlerSnack} className="btn btn-primary">
+                                                            Search
+                                                        </button>
+                                                    </button>
                                                 </div>
-                                                
-                                                <input
-                                                    onChange={this.searchInputHandler}
-                                                    name="searchSnack"
-                                                    type="text"
-                                                    className="form-control ms-5"
-                                                />
-                                                <button onClick={this.searchBtnHandlerSnack} className="btn btn-primary">
-                                                    Search
-                                                </button>
-                                            </button>
-                                        </div>
-                                        <div id="collapse3" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                            <div className="d-flex flex-wrap flex-row">
-                                                {this.renderProduct(this.state.filterSnack,this.state.pageSnack, this.addToBoxHandlerSnack)}
-                                            </div>
-                                            <div className="d-flex flex-row justify-content-between align-items-center">
-                                                <button disabled={this.state.pageSnack ===1} onClick={this.prevPageHandlerSnack} className="btn btn-dark">
-                                                    {"<"}
-                                                </button>
-                                                <div className="text-center">Page {this.state.pageSnack} of {this.state.maxPageSnack}</div>
-                                                <button disabled={this.state.pageSnack === this.state.maxPageSnack}onClick={this.nextPageHandlerSnack} className="btn btn-dark">
-                                                    {">"}
-                                                </button>
-                                            </div>
-                                            </div>
-                                        </div>
+                                                :
+                                                <>
+                                                <div class="d-grid gap-2">
+                                                    <button class="btn d-flex panel-title  " type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                                        <div class="me-5">
+                                                            <div>Snack</div>
+                                                            <div>{this.state.itemSnack} / {this.state.productData.snack}</div>  
+                                                        </div>
+                                                        
+                                                        <input
+                                                             onChange={this.searchInputHandler}
+                                                             name="searchSnack"
+                                                             type="text"
+                                                             className="form-control ms-5"
+                                                        />
+                                                        <button onClick={this.searchBtnHandlerSnack} className="btn btn-primary">
+                                                            Search
+                                                        </button>
+                                                    </button>
+                                                </div>
+                                                <div id="collapse3" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <div className="d-flex flex-wrap flex-row">
+                                                            {this.renderProduct(this.state.filterSnack,this.state.pageSnack, this.addToBoxHandler)}
+                                                        </div>
+                                                        <div className="d-flex flex-row justify-content-between align-items-center">
+                                                            <button disabled={this.state.pageSnack ===1} onClick={this.prevPageHandlerSnack} className="btn btn-dark">
+                                                                {"<"}
+                                                            </button>
+                                                            <div className="text-center">Page {this.state.pageSnack} of {this.state.maxPageSnack}</div>
+                                                            <button disabled={this.state.pageSnack === this.state.maxPageSnack}onClick={this.nextPageHandlerSnack} className="btn btn-dark">
+                                                                {">"}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </>
+                                            }
                                     </div>
                                    
 
@@ -406,24 +547,26 @@ class ProductDetail extends React.Component {
 
                         <div class="mt-5 text-center">
                         <h1>Box</h1>
-                        <table className="table">
-                            <thead className="thead-light">
-                                <tr>
-                                    <th>Name</th>
-                                    
-                                    <th>Image</th>
-                                    <th>Quantity</th>
-                                    
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
+                        <div className="text-center">
+                            <table className="table">
+                                <thead className="thead-light">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Image</th>
+                                        <th>Quantity</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        this.state.boxData.map((val)=>{
+                                        return <BoxCard BoxData={val} delete={this.deleteBoxHandler} qtyFunc={this.qtyBtnHandler}/>
+                                    })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                             
-                        </table>
-                            {
-                                this.state.boxData.map((val)=>{
-                                    return <BoxCard BoxData={val}/>
-                                })
-                            }
 
                     <div className="bg-light text-center">
                         {

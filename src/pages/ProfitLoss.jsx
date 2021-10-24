@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { API_URL } from "../constants/API";
 import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom'
+import {useSelector} from "react-redux" 
 
 function ProfitLoss() {
+  const globalState = useSelector((state)=>state.user)
+
   const [trxProfitLoss, setTrxProfitLoss] = useState([]);
 
   const fetchTrxProfitLoss = () => {
@@ -35,6 +39,9 @@ function ProfitLoss() {
   useEffect(() => {
     fetchTrxProfitLoss();
   }, []);
+
+  if (globalState.role !== "admin"){ return <Redirect to="/" /> }
+  
   return (
     <div className="col-12 text-center">
       <h1>Profit Loss Report</h1>
