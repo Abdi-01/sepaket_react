@@ -33,7 +33,7 @@ class App extends React.Component {
     if (userLocalStorage) {
       const userData = JSON.parse(userLocalStorage);
       this.props.userKeepLogin(userData);
-      this.props.getCartData(userData.username);
+      this.props.getCartData(userData.id_user);
       //this.props.getCartData(userData.id);
     } else {
       this.props.checkStorage();

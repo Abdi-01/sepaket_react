@@ -257,35 +257,54 @@ class ProductDetail extends React.Component {
     }
     
     addToCartHandler = () => {
-        Axios.get(`${API_URL}/carts`,{
-            params: {
-                userId: this.props.userGlobal.id,
-                productId: this.state.productData.id
-            }
-        })
-        .then((result)=>{
-            if (result.data.length){
-                Axios.patch(`${API_URL}/carts/${result.data[0].id}`,{
-                    quantity: result.data[0].quantity + this.state.quantity
-                })
-                .then (() =>{ alert("berhasil menambahkan barang")
-                    this.props.getCartData(this.props.userGlobal.id)
-                })
+        const d = new Date()
+        const tahun = d.getFullYear()
+        const bulan = d.getMonth() + 1
+        const hari = d.getDate()
 
-            } else {
-                Axios.post(`${API_URL}/carts`,{
-                    userId : this.props.userGlobal.id,
-                    productId : this.state.productData.id,
-                    price : this.state.productData.price,
-                    productName : this.state.productData.productName,
-                    productImage : this.state.productData.productImage,
-                    quantity : this.state.quantity
-                })
-                .then(()=>{alert("berhasil menambahkan barang")
-                    this.props.getCartData(this.props.userGlobal.id)
-                })
-            }
+        Axios.post(`${API_URL}/carts/add-cart`,{
+            id_parcel : this.props.match.params.productId,
+            id_user : this.props.userGlobal.id_user,
+            cart_date :  `${tahun}-${bulan}-${hari}`
         })
+        .then((res)=>{alert("berhasil menambahkan barang")
+            console.log(res.data.hasil.insertId)
+            Axios.post(`${API_URL}/carts/detail-cart`,{
+                id_cart : res.data.hasil.insertId,
+                boxData : this.state.boxData
+            })
+            // this.props.getCartData(this.props.userGlobal.id)
+        })
+
+        // Axios.get(`${API_URL}/carts`,{
+        //     params: {
+        //         userId: this.props.userGlobal.id,
+        //         productId: this.state.productData.id
+        //     }
+        // })
+        // .then((result)=>{
+        //     if (result.data.length){
+        //         Axios.patch(`${API_URL}/carts/${result.data[0].id}`,{
+        //             quantity: result.data[0].quantity + this.state.quantity
+        //         })
+        //         .then (() =>{ alert("berhasil menambahkan barang")
+        //             this.props.getCartData(this.props.userGlobal.id)
+        //         })
+
+        //     } else {
+        //         Axios.post(`${API_URL}/carts`,{
+        //             userId : this.props.userGlobal.id,
+        //             productId : this.state.productData.id,
+        //             price : this.state.productData.price,
+        //             productName : this.state.productData.productName,
+        //             productImage : this.state.productData.productImage,
+        //             quantity : this.state.quantity
+        //         })
+        //         .then(()=>{alert("berhasil menambahkan barang")
+        //             this.props.getCartData(this.props.userGlobal.id)
+        //         })
+        //     }
+        // })
     }
     
 
@@ -570,8 +589,8 @@ class ProductDetail extends React.Component {
 
                     <div className="bg-light text-center">
                         {
-                            this.state.boxData.length?
-                            <button onClick={()=> this.deleteCartHandler(this.props.BoxData.id_product) } className="btn btn-success">Add To Cart</button>
+                            this.state.itemCoklat === this.state.productData.coklat && this.state.itemDrink === this.state.productData.drink && this.state.itemSnack === this.state.productData.snack ?
+                            <button onClick={this.addToCartHandler} className="btn btn-success">Add To Cart</button>
                             : null
                         }
                     </div>
