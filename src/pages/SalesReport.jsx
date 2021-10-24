@@ -15,8 +15,12 @@ import {
   Bar,
   Line,
 } from "recharts";
+import { Redirect } from 'react-router-dom'
+import {useSelector} from "react-redux" 
 
 function SalesReport() {
+  const globalState = useSelector((state)=>state.user)
+
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [selectData, setSelectData] = useState("parcels");
@@ -128,6 +132,8 @@ function SalesReport() {
     fetchTrxParcelAll();
     fetchTrxParcelChart();
   }, []);
+
+  if (globalState.role !== "admin"){ return <Redirect to="/" /> }
 
   return (
     <div>

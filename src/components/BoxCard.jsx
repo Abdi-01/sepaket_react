@@ -42,24 +42,28 @@ class BoxCard extends React.Component {
 
     render (){
         return (
-            <div className="text-center">
-
-                <table className="table">
-                    <tbody>
-                        <tr>
-                            <td className="align-middle">{this.props.BoxData.product_name}</td>
-                            <td className="align-middle">
-                                <img src={this.props.BoxData.photo_product} alt="" style={{height:"120px"}} />
-                            </td>
-                            <td className="align-middle">1</td>
-                            <td className="align-middle">
-                                <button className="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-
-                </table>
-            </div>
+            
+            <tr>
+                <td className="align-middle">{this.props.BoxData.product_name}</td>
+                <td className="align-middle">
+                    <img class="me" src={this.props.BoxData.photo_product} alt="" style={{height:"120px"}} />
+                </td>
+                <td className="align-middle"> 
+                    <div className="d-flex flex-row align-item-center">
+                        <button onClick={()=>this.props.qtyFunc("decrement",this.props.BoxData)} className="btn btn-primary">
+                            -
+                        </button>
+                        <div className="m-2"> {this.props.BoxData.qty} </div>
+                        <button onClick={()=>this.props.qtyFunc("increment",this.props.BoxData)} className="btn btn-primary">
+                            +
+                        </button>
+                    </div>
+                </td>
+                <td className="align-middle">
+                    <button onClick={()=>this.props.delete(this.props.BoxData.id_product, this.props.BoxData.id_cat, this.props.BoxData.qty)} className="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+                    
         )
     }
 }

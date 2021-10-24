@@ -4,8 +4,12 @@ import Axios from "axios";
 import "../assets/styles/parcel.css";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { Redirect } from 'react-router-dom'
+import {useSelector} from "react-redux" 
 
 function AddParcel() {
+  const globalState = useSelector((state)=>state.user)
+
   const [parcelList, setParcelList] = useState([]);
   const [idParcel, setIdParcel] = useState(0);
   const [addNameParcel, setAddNameParcel] = useState("");
@@ -252,6 +256,8 @@ function AddParcel() {
     fetchAvgCapitalProduct();
   }, []);
 
+  if (globalState.role !== "admin"){ return <Redirect to="/" /> }
+  
   return (
     <div className="d-flex flex-column justify-content-center align-items-center bd-highlight mb-3">
       <h1 className="col-12 text-center">Parcel's Creation</h1>

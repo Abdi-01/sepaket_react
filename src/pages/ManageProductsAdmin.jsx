@@ -5,8 +5,12 @@ import "bootstrap/dist/css/bootstrap.css";
 import Axios from "axios";
 import { API_URL } from "../constants/API";
 import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom'
+import {useSelector} from "react-redux" 
 
 function ManageProductsAdmin() {
+  const globalState = useSelector((state)=>state.user)
+
   const [productList, setProductList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
 
@@ -246,6 +250,8 @@ function ManageProductsAdmin() {
     fetchProduct();
     fetchCategory();
   }, []);
+
+  if (globalState.role !== "admin"){ return <Redirect to="/" /> }
 
   return (
     <div>

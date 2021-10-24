@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { API_URL } from "../constants/API";
 import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom'
+import {useSelector} from "react-redux" 
 
 function RestockProductsAdmin() {
+  const globalState = useSelector((state)=>state.user)
+
   const [productsStock, setProductsStock] = useState([]);
   const [page, setPage] = useState(1);
   const [maxPage, setMaxpage] = useState(0);
@@ -115,6 +119,8 @@ function RestockProductsAdmin() {
   useEffect(() => {
     fetchProductsStock();
   }, []);
+
+  if (globalState.role !== "admin"){ return <Redirect to="/" /> }
 
   return (
     <div>
