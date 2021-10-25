@@ -26,6 +26,7 @@ import ProfitLoss from "./pages/ProfitLoss";
 import SalesReport from "./pages/SalesReport";
 import Revenue from "./pages/Revenue";
 import ManageTransaction from "./pages/ManageTransaction";
+import UserTransaction from "./pages/UserTransaction";
 
 class App extends React.Component {
   componentDidMount() {
@@ -69,6 +70,7 @@ class App extends React.Component {
           />
           <Route component={Admin} path="/admin" />
           <Route component={Cart} path="/Cart" />
+          <Route component={UserTransaction} path="/transaction" />
           <Route component={History} path="/History" />
           <Route component={ProductDetail} path="/ProductDetail/:productId" />
           <Route component={Home} path="/home" />
