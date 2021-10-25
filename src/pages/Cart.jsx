@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Axios from 'axios'
 import { API_URL } from '../constants/API'
 import { getCartData } from '../redux/actions/cart'
+import { Redirect } from 'react-router-dom'
 
 class Cart extends React.Component {
     state = {
@@ -12,6 +13,11 @@ class Cart extends React.Component {
         payment:0
     }
     
+    componentDidMount(){
+        this.props.getCartData(this.props.userGlobal.id_user)
+        console.log(this.props.cartGlobal.cartList)
+    }
+
     deleteCartHandler = (cartId) => {
         Axios.delete(`${API_URL}/carts/${cartId}`)
         .then(()=>{
@@ -24,12 +30,12 @@ class Cart extends React.Component {
         return this.props.cartGlobal.cartList.map((val)=>{
             return (
                 <tr>
-                    <td className="align-middle">{val.productName}</td>
-                    <td className="align-middle">{val.price}</td>
+                    <td className="align-middle">{val.parcel_name}</td>
+                    <td className="align-middle">Rp {val.harga_jual.toLocaleString()}</td>
                     <td className="align-middle">
-                        <img src={val.productImage} alt="" style={{height:"120px"}} />
+                        <img src={val.photo_parcel} alt="" style={{height:"120px"}} />
                     </td>
-                    <td className="align-middle">{val.quantity}</td>
+                    <td className="align-middle">{val.qty_parcel}</td>
                     <td className="align-middle">{val.quantity * val.price}</td>
                     <td className="align-middle">
                         <button onClick={()=> this.deleteCartHandler(val.id) } className="btn btn-danger">Delete</button>
@@ -89,6 +95,9 @@ class Cart extends React.Component {
     }
 
     render(){
+        if (this.props.userGlobal.status !== "verified"){
+            return <Redirect to="/Login" />
+        }
         return (
             <div className="p-5 text-center">
                  <h1>Cart</h1>
@@ -97,11 +106,11 @@ class Cart extends React.Component {
                         <table className="table">
                             <thead className="thead-light">
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Price</th>
+                                    <th>Nama Parcel</th>
+                                    <th>Harga</th>
                                     <th>Image</th>
                                     <th>Quantity</th>
-                                    <th>Total</th>
+                                    <th>Detail</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

@@ -215,10 +215,7 @@ class MyNavbar extends React.Component {
       <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid mx-4">
-            <Link
-              onClick={this.props.getCartData(this.props.userGlobal.id)}
-              to="/"
-            >
+            <Link to="/">
               {" "}
               <img src={Logo3} alt="" height="70" />
             </Link>

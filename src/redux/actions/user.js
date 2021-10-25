@@ -24,6 +24,7 @@ export const loginUser = ({ username, password }) => {
             if(!result.data.dataLogin) alert (result.data.message)
             console.log(result.data)
             localStorage.setItem("userDataEmmerce",JSON.stringify(result.data.dataLogin))
+            console.log(localStorage)
             dispatch({
                 type: "USER_LOGIN",
                 payload: result.data.dataLogin
@@ -42,7 +43,7 @@ export const logoutUser = ()=>{
 
 export const userKeepLogin = (userData) => {
     return (dispatch) => {
-        console.log(userData.username)
+        console.log(userData.id_user)
         Axios.get(`${API_URL}/users/get`,{
             params: {
                 username : userData.username

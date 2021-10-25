@@ -4,10 +4,13 @@ import "../assets/styles/front-page.css"
 import frontpage from "../../src/assets/images/front-page.png"
 import faq from "../../src/assets/images/faq.png"
 import { Link } from "react-router-dom";
+import { getCartData } from "../redux/actions/cart";
 
-class frontPage extends React.Component {    
+class frontPage extends React.Component {
+    componentDidMount(){
+        this.props.getCartData(this.props.userGlobal.id_user)
+    }    
     render(){
-
         return (
             <div>
                 <div class="container">
@@ -197,4 +200,8 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps)(frontPage)
+const mapDispatchToProps = {
+    getCartData,
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(frontPage);
