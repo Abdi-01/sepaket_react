@@ -12,7 +12,26 @@ class Cart extends React.Component {
         address:"",
         payment:0,
         detailItem:[],
-        qtyCart:1,
+
+        editId: 0,
+        editQty:1,
+    }
+
+    editToggle = (val) =>{
+        this.setState({
+            editId: val.id_cart,
+            editQty: val.qty_parcel,
+        })
+    }
+
+    saveBTnHandler = (id_cart) => {
+        Axios.patch(`${API_URL}/carts/edit-cart/${id_cart}`,{
+            qty_parcel:this.state.editQty
+        })
+        .then(()=>{
+            this.setState({editId:0})
+            this.componentDidMount()
+        })
     }
     
     componentDidMount(){
@@ -48,7 +67,22 @@ class Cart extends React.Component {
                     <td className="align-middle">
                         <img src={API_URL+val.photo_parcel} alt="" style={{height:"120px"}} />
                     </td>
-                    <td className="align-middle">{val.qty_parcel}</td>
+                    <td className="align-middle">
+                        {
+                            this.state.editId === val.id_cart?
+                            <>
+                                <td>
+                                    <input value={this.state.editQty} onChange={this.inputHandler} name="editQty" type="text" className="form-control" />
+                                </td>
+                                <button onClick={()=>this.saveBTnHandler(val.id_cart)}  className="btn btn-success">Save</button>
+                            </>
+                            :
+                            <>
+                                <div>{val.qty_parcel}</div>
+                                <button onClick={()=> this.editToggle(val)} className="btn btn-secondary">Edit</button>
+                            </>
+                        }
+                    </td>
                     {item.map((isi)=>{
                         if (isi){
                             return(
