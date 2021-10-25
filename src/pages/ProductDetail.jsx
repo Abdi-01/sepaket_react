@@ -323,7 +323,7 @@ class ProductDetail extends React.Component {
                     <div className="col-sm-4">
                         <img
                         style ={{width:"100%", "max-width":350, "min-width":150}}
-                        src={this.state.productData.photo_parcel}
+                        src={API_URL+this.state.productData.photo_parcel}
                         alt="parcel"
                         />
                     </div>

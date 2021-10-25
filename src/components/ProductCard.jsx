@@ -43,7 +43,7 @@ class ProductCard extends React.Component {
     render (){
         return (
             <div className="card product-card">
-                <img src={this.props.productData.photo_parcel} alt="foto parcel"/>
+                <img src={API_URL+this.props.productData.photo_parcel} alt="foto parcel"/>
             <div className="mt-2">
                 <div>
                     <Link to={`/ProductDetail/${this.props.productData.id_parcel}`} style={{ textDecoration:"none", color: "inherit" }}>
