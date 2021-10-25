@@ -11,7 +11,8 @@ class Cart extends React.Component {
         recipientName: "",
         address:"",
         payment:0,
-        detailItem:[]
+        detailItem:[],
+        qtyCart:1,
     }
     
     componentDidMount(){
@@ -25,11 +26,11 @@ class Cart extends React.Component {
         })
     }
 
-    deleteCartHandler = (cartId) => {
-        Axios.delete(`${API_URL}/carts/${cartId}`)
+    deleteCartHandler = (id_cart) => {
+        Axios.delete(`${API_URL}/carts/delete-cart/${id_cart}`)
         .then(()=>{
             alert("berhasil menghapus item dari cart")
-            this.props.getCartData(this.props.userGlobal.id)
+            this.componentDidMount()
         })
     }
 

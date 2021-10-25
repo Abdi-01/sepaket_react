@@ -273,38 +273,7 @@ class ProductDetail extends React.Component {
                 id_cart : res.data.hasil.insertId,
                 boxData : this.state.boxData
             })
-            // this.props.getCartData(this.props.userGlobal.id)
         })
-
-        // Axios.get(`${API_URL}/carts`,{
-        //     params: {
-        //         userId: this.props.userGlobal.id,
-        //         productId: this.state.productData.id
-        //     }
-        // })
-        // .then((result)=>{
-        //     if (result.data.length){
-        //         Axios.patch(`${API_URL}/carts/${result.data[0].id}`,{
-        //             quantity: result.data[0].quantity + this.state.quantity
-        //         })
-        //         .then (() =>{ alert("berhasil menambahkan barang")
-        //             this.props.getCartData(this.props.userGlobal.id)
-        //         })
-
-        //     } else {
-        //         Axios.post(`${API_URL}/carts`,{
-        //             userId : this.props.userGlobal.id,
-        //             productId : this.state.productData.id,
-        //             price : this.state.productData.price,
-        //             productName : this.state.productData.productName,
-        //             productImage : this.state.productData.productImage,
-        //             quantity : this.state.quantity
-        //         })
-        //         .then(()=>{alert("berhasil menambahkan barang")
-        //             this.props.getCartData(this.props.userGlobal.id)
-        //         })
-        //     }
-        // })
     }
     
 
