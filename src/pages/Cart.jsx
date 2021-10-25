@@ -10,7 +10,28 @@ class Cart extends React.Component {
         isCheckoutMode: false,
         recipientName: "",
         address:"",
-        payment:0
+        payment:0,
+        detailItem:[],
+
+        editId: 0,
+        editQty:1,
+    }
+
+    editToggle = (val) =>{
+        this.setState({
+            editId: val.id_cart,
+            editQty: val.qty_parcel,
+        })
+    }
+
+    saveBTnHandler = (id_cart) => {
+        Axios.patch(`${API_URL}/carts/edit-cart/${id_cart}`,{
+            qty_parcel:this.state.editQty
+        })
+        .then(()=>{
+            this.setState({editId:0})
+            this.componentDidMount()
+        })
     }
     
     componentDidMount(){
@@ -26,27 +47,64 @@ class Cart extends React.Component {
         })
     }
 
-    deleteCartHandler = (cartId) => {
-        Axios.delete(`${API_URL}/carts/${cartId}`)
+    deleteCartHandler = (id_cart) => {
+        Axios.delete(`${API_URL}/carts/delete-cart/${id_cart}`)
         .then(()=>{
             alert("berhasil menghapus item dari cart")
-            this.props.getCartData(this.props.userGlobal.id)
+            this.componentDidMount()
         })
     }
 
     renderCart = () => {
         return this.props.cartGlobal.cartList.map((val)=>{
+            let item = this.state.detailItem.map((item)=>{
+                        if(item.parcel_name === val.parcel_name) {
+                            return item
+                        } return null
+                        })
             return (
                 <tr>
                     <td className="align-middle">{val.parcel_name}</td>
                     <td className="align-middle">Rp {val.harga_jual.toLocaleString()}</td>
                     <td className="align-middle">
-                        <img src={val.photo_parcel} alt="" style={{height:"120px"}} />
+                        <img src={API_URL+val.photo_parcel} alt="" style={{height:"120px"}} />
                     </td>
-                    <td className="align-middle">{val.qty_parcel}</td>
-                    <td className="align-middle">{val.quantity * val.price}</td>
                     <td className="align-middle">
-                        <button onClick={()=> this.deleteCartHandler(val.id) } className="btn btn-danger">Delete</button>
+                        {
+                            this.state.editId === val.id_cart?
+                            <>
+                                <td>
+                                    <input value={this.state.editQty} onChange={this.inputHandler} name="editQty" type="text" className="form-control" />
+                                </td>
+                                <button onClick={()=>this.saveBTnHandler(val.id_cart)}  className="btn btn-success">Save</button>
+                            </>
+                            :
+                            <>
+                                <div>{val.qty_parcel}</div>
+                                <button onClick={()=> this.editToggle(val)} className="btn btn-secondary">Edit</button>
+                            </>
+                        }
+                    </td>
+                    {item.map((isi)=>{
+                        if (isi){
+                            return(
+                                <td className="align-middle d-flex flex-row">
+                                    <tr>
+                                        <td>
+                                            {isi.product_name}
+                                        </td>
+                                        <td>
+                                            {isi.qty_product}pcs
+                                        </td>
+                                    </tr>
+                                </td>
+                            )
+                        }
+                        return null
+                    })}
+                    
+                    <td className="align-middle">
+                        <button onClick={()=> this.deleteCartHandler(val.id_cart) } className="btn btn-danger">Delete</button>
                     </td>
                 </tr>
             )
@@ -56,7 +114,7 @@ class Cart extends React.Component {
     renderSubtotalPrice = ()=>{
         let subtotal = 0
         for (let i = 0; i < this.props.cartGlobal.cartList.length; i++) {
-            subtotal += this.props.cartGlobal.cartList[i].price * this.props.cartGlobal.cartList[i].quantity
+            subtotal += this.props.cartGlobal.cartList[i].harga_jual 
         }
         return subtotal
     }

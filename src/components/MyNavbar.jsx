@@ -137,6 +137,11 @@ class MyNavbar extends React.Component {
                 </Link>
               </li>
               <li>
+                <Link class="dropdown-item" to="/transaction">
+                  Transaction
+                </Link>
+              </li>
+              <li>
                 <hr class="dropdown-divider" />
               </li>
               <li>

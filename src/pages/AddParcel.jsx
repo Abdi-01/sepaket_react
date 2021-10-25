@@ -4,11 +4,11 @@ import Axios from "axios";
 import "../assets/styles/parcel.css";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import { Redirect } from 'react-router-dom'
-import {useSelector} from "react-redux" 
+import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function AddParcel() {
-  const globalState = useSelector((state)=>state.user)
+  const globalState = useSelector((state) => state.user);
 
   const [parcelList, setParcelList] = useState([]);
   const [idParcel, setIdParcel] = useState(0);
@@ -25,6 +25,7 @@ function AddParcel() {
   const [toggleBtnOption, setToggleBtnOption] = useState(false);
   const [categoryRender, setCategoryRender] = useState([]);
   const [catJml, setCatJml] = useState([]);
+  const [modal, setModal] = useState(0);
 
   const fetchParcel = () => {
     Axios.get(`${API_URL}/parcels-admin/get`)
@@ -75,18 +76,7 @@ function AddParcel() {
       Axios.post(`${API_URL}/parcels-admin/add-parcel`, formData)
         .then((res) => {
           alert(res.data.message);
-          fetchParcel();
-          setAddNameParcel("");
-          setAddFile();
-          setAddFileName("");
-          setAddPriceParcel(0);
-          setPrice(0);
-          setJmlCategory1(0);
-          setJmlCategory2(0);
-          setJmlCategory3(0);
-          setJmlCategory4(0);
-          setCategoryRender([]);
-          setCatJml([]);
+          <Redirect to="/admin/addparcel" />;
         })
         .catch((err) => {
           console.log(err);
@@ -152,6 +142,7 @@ function AddParcel() {
           jml: jmlCategory1,
         },
       ]);
+      setModal(categoryRender[0].rataRata * jmlCategory1);
     }
     if (categoryRender.length === 2) {
       setPrice(
@@ -174,6 +165,10 @@ function AddParcel() {
           jml: jmlCategory2,
         },
       ]);
+      setModal(
+        categoryRender[0].rataRata * jmlCategory1 +
+          categoryRender[1].rataRata * jmlCategory2
+      );
     }
     if (categoryRender.length === 3) {
       setPrice(
@@ -203,6 +198,11 @@ function AddParcel() {
           jml: jmlCategory3,
         },
       ]);
+      setModal(
+        categoryRender[0].rataRata * jmlCategory1 +
+          categoryRender[1].rataRata * jmlCategory2 +
+          categoryRender[2].rataRata * jmlCategory3
+      );
     }
     if (categoryRender.length === 4) {
       setPrice(
@@ -239,6 +239,12 @@ function AddParcel() {
           jml: jmlCategory4,
         },
       ]);
+      setModal(
+        categoryRender[0].rataRata * jmlCategory1 +
+          categoryRender[1].rataRata * jmlCategory2 +
+          categoryRender[2].rataRata * jmlCategory3 +
+          categoryRender[3].rataRata * jmlCategory4
+      );
     }
   };
 
@@ -256,8 +262,10 @@ function AddParcel() {
     fetchAvgCapitalProduct();
   }, []);
 
-  if (globalState.role !== "admin"){ return <Redirect to="/" /> }
-  
+  if (globalState.role !== "admin") {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div className="d-flex flex-column justify-content-center align-items-center bd-highlight mb-3">
       <h1 className="col-12 text-center">Parcel's Creation</h1>
@@ -307,6 +315,30 @@ function AddParcel() {
           <div className="mb-3">
             <label className="form-label">Price (Recommendation)</label>
           </div>
+          {toggleBtnOption ? (
+            <div>
+              <label>Modal :</label>
+              <input
+                width="30%"
+                value={modal}
+                type="number"
+                aria-label="default input example"
+                name="modal"
+                disabled
+              />
+              <label>Margin :</label>
+              <input
+                width="30%"
+                value={price - modal}
+                type="number"
+                aria-label="default input example"
+                name="modal"
+                disabled
+              />
+            </div>
+          ) : (
+            " "
+          )}
           <div class="input-group mb-3">
             <input
               onChange={inputHandler}
