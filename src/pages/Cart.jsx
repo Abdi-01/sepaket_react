@@ -15,6 +15,8 @@ class Cart extends React.Component {
 
         editId: 0,
         editQty:1,
+        selectedFile : null,
+        id_trx:0
     }
 
     editToggle = (val) =>{
@@ -137,7 +139,8 @@ class Cart extends React.Component {
             address : this.state.address,
         })
         .then((res)=>{alert("berhasil melakukan transaksi silahkan lakukan transfer")
-            Axios.post(`${API_URL}/user-transactions/detail-transaction`,{
+            this.setState({id_trx: res.data.hasil.insertId})
+                Axios.post(`${API_URL}/user-transactions/detail-transaction`,{
                 id_trx : res.data.hasil.insertId,
                 cartList : this.props.cartGlobal.cartList,
                 detailItem : this.state.detailItem
@@ -147,6 +150,24 @@ class Cart extends React.Component {
                 this.deleteCartHandler(val.id_cart)
             })
         })
+    }
+
+    fileSelectedHandler = event =>{
+        console.log(event.target.files)
+        if (event.target.files[0]){
+            this.setState({selectedFile: event.target.files[0]})
+        }
+    }
+
+    fileUploadHandler = () =>{
+        if(this.state.selectedFile){}
+        const formData = new FormData();
+        formData.append('file',this.state.selectedFile)
+        Axios.patch(`${API_URL}/user-transactions/bukti-transfer/${this.state.id_trx}`, formData)
+
+            .then(res=> {
+                alert(res.data.message)
+            })
     }
 
     render(){
@@ -207,6 +228,19 @@ class Cart extends React.Component {
                                 <button onClick={this.payBtnHandler} className="btn btn-success mx-1">pay</button>
                             </div>
                         </div>
+                        <div className="card text-lg-start">
+                            <div className="card-header">
+                                <strong>Bukti Transfer</strong>
+                            </div>
+                            <div className="card-body">
+                                <div class="d-flex justify-content-center mx-4">
+                                    <input type="file" onChange={this.fileSelectedHandler} />
+                                    <button class="btn btn-primary" onClick={this.fileUploadHandler}>Upload</button>
+                                </div>
+                            </div>
+                          
+                        </div>
+
                     </div>
                     : null
                 }
