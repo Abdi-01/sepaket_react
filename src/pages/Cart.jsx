@@ -15,6 +15,8 @@ class Cart extends React.Component {
 
         editId: 0,
         editQty:1,
+        selectedFile : null,
+        id_trx:0
     }
 
     editToggle = (val) =>{
@@ -37,11 +39,13 @@ class Cart extends React.Component {
     componentDidMount(){
         this.props.getCartData(this.props.userGlobal.id_user)
         console.log(this.props.cartGlobal.cartList)
+        
         Axios.get(`${API_URL}/carts/get-detail`,{ 
             params:{userId: this.props.userGlobal.id_user}
         })
         .then((result)=>{
             this.setState({detailItem: result.data})
+            console.log(this.state.detailItem)
         })
     }
 
@@ -127,35 +131,43 @@ class Cart extends React.Component {
     }
 
     payBtnHandler = () =>{
-
-        if (this.state.payment < 1.05*this.renderSubtotalPrice()){
-            alert(`uang Anda kurang ${1.05*this.renderSubtotalPrice()-this.state.payment}`)
-            return
-        }
-
-        if (this.state.payment > 1.05*this.renderSubtotalPrice()){
-            alert(`Terima Kasih, uang kembalian Anda ${this.state.payment-1.05*this.renderSubtotalPrice()}`)
-        } else if (this.state.payment === 1.05*this.renderSubtotalPrice()){
-            alert(`Terima Kasih sudah membayar dengan uang pas`)
-        }
-
         const d = new Date()
-        Axios.post(`${API_URL}/transaction`,{
-            userId : this.props.userGlobal.id,
-            adress : this.state.adress,
-            recipientName : this.state.recipientName,
-            totalPrice : parseInt(1.05*this.renderSubtotalPrice()), 
-            totalPayment : parseInt(this.state.payment),
-            transactionDate : `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()} `,
-            transactionItem : this.props.cartGlobal.cartList
+        Axios.post(`${API_URL}/user-transactions/add-transaction`,{
+            cart_date :  `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`,
+            total_trx : parseInt(this.renderSubtotalPrice()), 
+            id_user : this.props.userGlobal.id_user,
+            address : this.state.address,
         })
-        .then((result)=>{
-            alert ("berhasil melakukan pembayaran")
-            result.data.transactionItem.forEach((val)=>{
-                this.deleteCartHandler(val.id)
+        .then((res)=>{alert("berhasil melakukan transaksi silahkan lakukan transfer")
+            this.setState({id_trx: res.data.hasil.insertId})
+                Axios.post(`${API_URL}/user-transactions/detail-transaction`,{
+                id_trx : res.data.hasil.insertId,
+                cartList : this.props.cartGlobal.cartList,
+                detailItem : this.state.detailItem
             })
 
+            this.props.cartGlobal.cartList.forEach((val)=>{
+                this.deleteCartHandler(val.id_cart)
+            })
         })
+    }
+
+    fileSelectedHandler = event =>{
+        console.log(event.target.files)
+        if (event.target.files[0]){
+            this.setState({selectedFile: event.target.files[0]})
+        }
+    }
+
+    fileUploadHandler = () =>{
+        if(this.state.selectedFile){}
+        const formData = new FormData();
+        formData.append('file',this.state.selectedFile)
+        Axios.patch(`${API_URL}/user-transactions/bukti-transfer/${this.state.id_trx}`, formData)
+
+            .then(res=> {
+                alert(res.data.message)
+            })
     }
 
     render(){
@@ -201,17 +213,10 @@ class Cart extends React.Component {
                             </div>
                             <div className="card-body">
                                 <div className="d-flex my-2 flex-row justify-content-between align-items-center">
-                                    <span>Sub Total Price</span>
-                                    <span>Rp {this.renderSubtotalPrice()}</span>
-                                </div>
-                                <div className="d-flex my-2 flex-row justify-content-between align-items-center">
-                                    <span>Tax 5%</span>
-                                    <span>Rp {0.05*this.renderSubtotalPrice()} </span>
-                                </div>
-                                <div className="d-flex my-2 flex-row justify-content-between align-items-center">
                                     <span>Total Price</span>
-                                    <span>Rp {1.05*this.renderSubtotalPrice()}</span>
+                                    <span>Rp {this.renderSubtotalPrice().toLocaleString()}</span>
                                 </div>
+
                             </div>
                             <div className="card-body border-top">
                                 <label htmlFor="recipientName">Recipient Name</label>
@@ -220,12 +225,22 @@ class Cart extends React.Component {
                                 <input onChange={this.inputHandler} type="text" className="form-control" name="address" />
                             </div>
                             <div className="card-footer">
-                                <div className="d-flex flex-row justify-content-between align-items-center">
-                                <input onChange={this.inputHandler} name="payment" type="number" className="form-control mx-1"/>
                                 <button onClick={this.payBtnHandler} className="btn btn-success mx-1">pay</button>
-                                </div>
                             </div>
                         </div>
+                        <div className="card text-lg-start">
+                            <div className="card-header">
+                                <strong>Bukti Transfer</strong>
+                            </div>
+                            <div className="card-body">
+                                <div class="d-flex justify-content-center mx-4">
+                                    <input type="file" onChange={this.fileSelectedHandler} />
+                                    <button class="btn btn-primary" onClick={this.fileUploadHandler}>Upload</button>
+                                </div>
+                            </div>
+                          
+                        </div>
+
                     </div>
                     : null
                 }

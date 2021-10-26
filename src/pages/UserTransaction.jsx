@@ -3,8 +3,10 @@ import Axios from "axios";
 import { API_URL } from "../constants/API";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import {useSelector} from "react-redux" 
 
 function UserTransaction(props) {
+  const globalState = useSelector((state)=>state.user)
   const [dataTransaksi, setDataTransaksi] = useState([]);
 
   const ongoingBtn = (idTrx) => {
@@ -56,6 +58,7 @@ function UserTransaction(props) {
     fetchDataTransaksi();
   }, [props.userGlobal.id_user]);
 
+  if (globalState.status !== "verified"){ return <Redirect to="/" /> }
   return (
     <div>
       <div className="col-12 text-center mb-4">
